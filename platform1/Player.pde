@@ -175,7 +175,7 @@ class Player {
       scale(-1,1); // flip horizontally by scaling horizontally by -100%
     }
     translate(-thomasWidth/2,-thomasHeight); // drawing images centered on character's feet
-
+    image(thomas, 0, 0);
     /* if(isOnGround==false) { // falling or jumping
       image(guy_run1, 0,0); // this running pose looks pretty good while in the air
     } else if(abs(velocity.x)<TRIVIAL_SPEED) { // not moving fast, i.e. standing
