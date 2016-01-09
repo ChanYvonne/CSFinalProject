@@ -31,10 +31,9 @@ void setup() { // called automatically when the program starts
 }
 
 void resetGame() {
-  // This function copies start_Grid into worldGrid, putting coins back
   // multiple levels could be supported by copying in a different start grid
   
-  thePlayer.reset(); // reset the coins collected number, etc.
+  thePlayer.reset(); // reset everything about the player
   
   theWorld.reload(); // reset world map
 
@@ -44,8 +43,7 @@ void resetGame() {
 
 Boolean gameWon() { // checks whether player has gotten to white rectangle
     PVector centerOfPlayer;
-    // we use this to check for coin overlap in center of player
-    // (remember that "position" is keeping track of bottom center of feet)
+    // (remember that "position" is keeping track of bottom center of player)
     centerOfPlayer = new PVector(thePlayer.position.x,thePlayer.position.y-thomas.height/2);
 
     return (theWorld.worldSquareAt(centerOfPlayer)==5);
@@ -123,8 +121,6 @@ void keyReleased() {
   theKeyboard.releaseKey(key,keyCode);
 }
 
-void stop() { // automatically called when program exits. here we'll stop and unload sounds.
-
-
+void stop() { // automatically called when program exits.
   super.stop(); // tells program to continue doing its normal ending activity
 }

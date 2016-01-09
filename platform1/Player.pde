@@ -85,8 +85,6 @@ class Player {
 
     topSide.x = position.x; // center of player
     topSide.y = position.y-ceilingProbeDistance; // top of guy
-
-    // if any edge of the player is inside a red killblock, reset the round
     
     // the following conditionals just check for collisions with each bump probe
     // depending upon which probe has collided, we push the player back the opposite direction
@@ -134,7 +132,7 @@ class Player {
   }
 
   void checkForFalling() {
-    // If we're standing on an empty or coin tile, we're not standing on anything. Fall!
+    // If we're standing on an empty tile or end tile, we're not standing on anything. Fall!
     if(theWorld.worldSquareAt(position)==World.TILE_EMPTY ||
        theWorld.worldSquareAt(position)==World.TILE_END){
        isOnGround=false;
@@ -176,27 +174,6 @@ class Player {
     }
     translate(-thomasWidth/2,-thomasHeight); // drawing images centered on character's feet
     image(thomas, 0, 0);
-    /* if(isOnGround==false) { // falling or jumping
-      image(guy_run1, 0,0); // this running pose looks pretty good while in the air
-    } else if(abs(velocity.x)<TRIVIAL_SPEED) { // not moving fast, i.e. standing
-      image(guy_stand, 0,0);
-    } else { // running. Animate.
-      if(animDelay--<0) {
-        animDelay=RUN_ANIMATION_DELAY;
-        if(animFrame==0) {
-          animFrame=1;
-        } else {
-          animFrame=0;
-        }
-      }
-      
-      if(animFrame==0) {
-        image(guy_run1, 0,0);
-      } else {
-        image(guy_run2, 0,0);
-      }
-    }
-    */
     popMatrix(); // undoes all translate/scale/rotate calls since the pushMatrix earlier in this function
   }
 }

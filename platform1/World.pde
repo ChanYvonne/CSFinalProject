@@ -13,7 +13,7 @@ class World {
 
   int[][] worldGrid = new int[GRID_UNITS_TALL][GRID_UNITS_WIDE]; // the game checks this one during play
   
-  // the game copies this into worldGrid each reset, returning coins that have since been cleared
+  // the game copies this into worldGrid each reset
   int[][] start_Grid = { {1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
                          {0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0},
                          {1, 0, 1, 0, 4, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0},
@@ -52,7 +52,6 @@ class World {
   }
   
   // changes the tile at a given pixel coordinate to be a new tile type
-  // currently used to replace TILE_COIN tiles with TILE_EMPTY tiles once collected
   void setSquareAtToThis(PVector thisPosition, int newTile) {
     int gridSpotX = int(thisPosition.x/GRID_UNIT_SIZE);
     int gridSpotY = int(thisPosition.y/GRID_UNIT_SIZE);
@@ -121,8 +120,8 @@ class World {
             fill(255);
             break;
           default:
-            stroke(245); // faint light outline. set to 255 (white) to remove entirely.
-            fill(209); // white
+            stroke(245); // faint light outline. set to 209 (same gray as background) to remove entirely.
+            fill(209); // gray
             break;
         }
         // then draw a rectangle
