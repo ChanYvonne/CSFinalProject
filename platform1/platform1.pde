@@ -20,7 +20,7 @@ final float GRAVITY_POWER = 0.5; // try making it higher or lower!
 void setup() { // called automatically when the program starts
   size(600,480); // how large the window/screen is for the game
   
-  font = loadFont("SansSerif-20.vlw");
+  font = loadFont("Avenir-Oblique-20.vlw");
 
   thomas = loadImage("thomas.png");
   

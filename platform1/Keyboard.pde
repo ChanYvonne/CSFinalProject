@@ -14,9 +14,7 @@ class Keyboard {
 
   void pressKey(int key,int keyCode) {
     if(key == 'r') { // never will be held down, so no Boolean needed to track it
-      if(gameWon()) { // if the game has been won...
-        resetGame(); // then R key resets it
-      }
+      resetGame(); // then R key resets it
     }
    
     if (keyCode == UP) {
