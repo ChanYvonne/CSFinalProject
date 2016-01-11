@@ -1,25 +1,14 @@
-class Player {
-  PVector position,velocity; // PVector contains two floats, x and y
-
-  Boolean isOnGround; // used to keep track of whether the player is on the ground. useful for control and animation.
-  Boolean facingRight; // used to keep track of which direction the player last moved in. used to flip player image.
-  int animDelay; // countdown timer between animation updates
-  int animFrame; // keeps track of which animation frame is currently shown for the player
+class Thomas extends Player {
   
-  static final float JUMP_POWER = 11.0; // how hard the player jolts upward on jump
-  static final float RUN_SPEED = 5.0; // force of player movement on ground, in pixels/cycle
-  static final float AIR_RUN_SPEED = 2.0; // like run speed, but used for control while in the air
-  static final float SLOWDOWN_PERC = 0.6; // friction from the ground. multiplied by the x speed each frame.
-  static final float AIR_SLOWDOWN_PERC = 0.85; // resistance in the air, otherwise air control enables crazy speeds
-  static final int RUN_ANIMATION_DELAY = 3; // how many game cycles pass between animation updates?
-  static final float TRIVIAL_SPEED = 1.0; // if under this speed, the player is drawn as standing still
-  
-  Player() { // constructor, gets called automatically when the Player instance is created
-    isOnGround = false;
-    facingRight = true;
-    position = new PVector();
-    velocity = new PVector();
-    reset();
+  Thomas() { // constructor, gets called automatically when the Thomas instance is created
+    super();
+    static final float JUMP_POWER = 11.0; // how hard the player jolts upward on jump
+    static final float RUN_SPEED = 5.0; // force of player movement on ground, in pixels/cycle
+    static final float AIR_RUN_SPEED = 2.0; // like run speed, but used for control while in the air
+    static final float SLOWDOWN_PERC = 0.6; // friction from the ground. multiplied by the x speed each frame.
+    static final float AIR_SLOWDOWN_PERC = 0.85; // resistance in the air, otherwise air control enables crazy speeds
+    static final float RUN_ANIMATION_DELAY = 3; // how many game cycles pass between animation updates?
+    static final float TRIVIAL_SPEED = 1.0; // if under this speed, the player is drawn as standing still
   }
 
   void checkForWallBumping() {
@@ -106,7 +95,7 @@ class Player {
   void draw() {
     int thomasWidth = thomas.width;
     int thomasHeight = thomas.height;
-    
+    /*
     if(velocity.x<-TRIVIAL_SPEED) {
       facingRight = false;
     } else if(velocity.x>TRIVIAL_SPEED) {
@@ -121,5 +110,6 @@ class Player {
     translate(-thomasWidth/2,-thomasHeight); // drawing images centered on character's feet
     image(thomas, 0, 0);
     popMatrix(); // undoes all translate/scale/rotate calls since the pushMatrix earlier in this function
+  */
   }
 }

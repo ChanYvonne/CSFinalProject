@@ -1,4 +1,4 @@
-static abstract class Player {
+abstract class Player {
   PVector position,velocity; // PVector contains two floats, x and y
 
   Boolean isOnGround; // used to keep track of whether the player is on the ground. useful for control and animation.
@@ -6,13 +6,13 @@ static abstract class Player {
   int animDelay; // countdown timer between animation updates
   int animFrame; // keeps track of which animation frame is currently shown for the player
   
-  static final float JUMP_POWER; // how hard the player jolts upward on jump
-  static final float RUN_SPEED; // force of player movement on ground, in pixels/cycle
-  static final float AIR_RUN_SPEED; // like run speed, but used for control while in the air
-  static final float SLOWDOWN_PERC; // friction from the ground. multiplied by the x speed each frame.
-  static final float AIR_SLOWDOWN_PERC; // resistance in the air, otherwise air control enables crazy speeds
-  static final int RUN_ANIMATION_DELAY; // how many game cycles pass between animation updates?
-  static final float TRIVIAL_SPEED; // if under this speed, the player is drawn as standing still
+  static float JUMP_POWER = 11.0; // how hard the player jolts upward on jump
+  static float RUN_SPEED = 5.0; // force of player movement on ground, in pixels/cycle
+  static float AIR_RUN_SPEED = 2.0; // like run speed, but used for control while in the air
+  static float SLOWDOWN_PERC = 0.6; // friction from the ground. multiplied by the x speed each frame.
+  static float AIR_SLOWDOWN_PERC = 0.85; // resistance in the air, otherwise air control enables crazy speeds
+  static int RUN_ANIMATION_DELAY = 3; // how many game cycl finales pass between animation updates?
+  float TRIVIAL_SPEED; // if under this speed, the player is drawn as standing still
   
   Player() { // constructor, gets called automatically when the Player instance is created
     isOnGround = false;
@@ -45,25 +45,12 @@ static abstract class Player {
     if(isOnGround) { // player can only jump if currently on the ground
       if(theKeyboard.holdingSpace || theKeyboard.holdingUp) { // either up arrow or space bar cause the player to jump
         velocity.y = -JUMP_POWER; // adjust vertical speed
-        isOnGround = false; // mark that the player has left the ground, i.e. cannot jump again for now
+        isOnGround = false; // mark that the player has left the ground, i.e.cannot jump again for now
       }
     }
   }
   
-  abstract void checkForWallBumping() {
-    /* Because of how we draw the player, "position" is the center of the feet/bottom
-     * To detect and handle wall/ceiling collisions, we create 5 additional positions:
-     * leftSideHigh - left of center, at shoulder/head level
-     * leftSideLow - left of center, at shin level
-     * rightSideHigh - right of center, at shoulder/head level
-     * rightSideLow - right of center, at shin level
-     * topSide - horizontal center, at tip of head
-     * These 6 points - 5 plus the original at the bottom/center - are all that we need
-     * to check in order to make sure the player can't move through blocks in the world.
-     * This works because the block sizes (World.GRID_UNIT_SIZE) aren't small enough to
-     * fit between the cracks of those collision points checked.
-     */
-  };
+  abstract void checkForWallBumping();
 
   void checkForFalling() {
     // If we're standing on an empty tile or end tile, we're not standing on anything. Fall!

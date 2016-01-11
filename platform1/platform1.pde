@@ -5,7 +5,7 @@ PImage thomas;
 // we use this to track how far the camera has scrolled left or right
 float cameraOffsetX;
 
-Player thePlayer = new Player();
+Thomas thePlayer = new Thomas();
 World theWorld = new World();
 Keyboard theKeyboard = new Keyboard();
 
