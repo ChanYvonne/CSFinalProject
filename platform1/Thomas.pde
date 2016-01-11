@@ -1,14 +1,15 @@
 class Thomas extends Player {
   
+  final float JUMP_POWER = 11.0; // how hard the player jolts upward on jump
+  final float RUN_SPEED = 5.0; // force of player movement on ground, in pixels/cycle
+  final float AIR_RUN_SPEED = 2.0; // like run speed, but used for control while in the air
+  final float SLOWDOWN_PERC = 0.6; // friction from the ground. multiplied by the x speed each frame.
+  final float AIR_SLOWDOWN_PERC = 0.85; // resistance in the air, otherwise air control enables crazy speeds
+  final float RUN_ANIMATION_DELAY = 3; // how many game cycles pass between animation updates?
+  final float TRIVIAL_SPEED = 1.0; // if under this speed, the player is drawn as standing still
+  
   Thomas() { // constructor, gets called automatically when the Thomas instance is created
     super();
-    static final float JUMP_POWER = 11.0; // how hard the player jolts upward on jump
-    static final float RUN_SPEED = 5.0; // force of player movement on ground, in pixels/cycle
-    static final float AIR_RUN_SPEED = 2.0; // like run speed, but used for control while in the air
-    static final float SLOWDOWN_PERC = 0.6; // friction from the ground. multiplied by the x speed each frame.
-    static final float AIR_SLOWDOWN_PERC = 0.85; // resistance in the air, otherwise air control enables crazy speeds
-    static final float RUN_ANIMATION_DELAY = 3; // how many game cycles pass between animation updates?
-    static final float TRIVIAL_SPEED = 1.0; // if under this speed, the player is drawn as standing still
   }
 
   void checkForWallBumping() {
@@ -88,6 +89,27 @@ class Thomas extends Player {
       position.x = theWorld.leftOfSquare(rightSideHigh)-wallProbeDistance;
       if(velocity.x > 0) {
         velocity.x = 0.0;
+      }
+    }
+  }
+
+  void inputCheck() {
+    // keyboard flags are set by keyPressed/keyReleased in the main .pde
+    
+    float speedHere = (isOnGround ? RUN_SPEED : AIR_RUN_SPEED);
+    float frictionHere = (isOnGround ? SLOWDOWN_PERC : AIR_SLOWDOWN_PERC);
+    
+    if(theKeyboard.holdingLeft) {
+      velocity.x -= speedHere;
+    } else if(theKeyboard.holdingRight) {
+      velocity.x += speedHere;
+    } 
+    velocity.x *= frictionHere; // causes player to constantly lose speed
+    
+    if(isOnGround) { // player can only jump if currently on the ground
+      if(theKeyboard.holdingSpace || theKeyboard.holdingUp) { // either up arrow or space bar cause the player to jump
+        velocity.y = -JUMP_POWER; // adjust vertical speed
+        isOnGround = false; // mark that the player has left the ground, i.e.cannot jump again for now
       }
     }
   }

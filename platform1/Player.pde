@@ -6,14 +6,6 @@ abstract class Player {
   int animDelay; // countdown timer between animation updates
   int animFrame; // keeps track of which animation frame is currently shown for the player
   
-  static float JUMP_POWER = 11.0; // how hard the player jolts upward on jump
-  static float RUN_SPEED = 5.0; // force of player movement on ground, in pixels/cycle
-  static float AIR_RUN_SPEED = 2.0; // like run speed, but used for control while in the air
-  static float SLOWDOWN_PERC = 0.6; // friction from the ground. multiplied by the x speed each frame.
-  static float AIR_SLOWDOWN_PERC = 0.85; // resistance in the air, otherwise air control enables crazy speeds
-  static int RUN_ANIMATION_DELAY = 3; // how many game cycl finales pass between animation updates?
-  float TRIVIAL_SPEED; // if under this speed, the player is drawn as standing still
-  
   Player() { // constructor, gets called automatically when the Player instance is created
     isOnGround = false;
     facingRight = true;
@@ -29,26 +21,7 @@ abstract class Player {
     velocity.y = 0;
   }
   
-  void inputCheck() {
-    // keyboard flags are set by keyPressed/keyReleased in the main .pde
-    
-    float speedHere = (isOnGround ? RUN_SPEED : AIR_RUN_SPEED);
-    float frictionHere = (isOnGround ? SLOWDOWN_PERC : AIR_SLOWDOWN_PERC);
-    
-    if(theKeyboard.holdingLeft) {
-      velocity.x -= speedHere;
-    } else if(theKeyboard.holdingRight) {
-      velocity.x += speedHere;
-    } 
-    velocity.x *= frictionHere; // causes player to constantly lose speed
-    
-    if(isOnGround) { // player can only jump if currently on the ground
-      if(theKeyboard.holdingSpace || theKeyboard.holdingUp) { // either up arrow or space bar cause the player to jump
-        velocity.y = -JUMP_POWER; // adjust vertical speed
-        isOnGround = false; // mark that the player has left the ground, i.e.cannot jump again for now
-      }
-    }
-  }
+  abstract void inputCheck();
   
   abstract void checkForWallBumping();
 
