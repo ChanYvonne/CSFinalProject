@@ -1,5 +1,6 @@
 // for storing and referencing animation frames for the player character
 PImage thomas;
+PImage chris;
 
 
 // we use this to track how far the camera has scrolled left or right
@@ -8,40 +9,43 @@ float cameraOffsetX;
 Thomas theThomas = new Thomas();
 World theWorld = new World();
 Keyboard theKeyboard = new Keyboard();
+Chris theChris = new Chris();
 
 PFont font;
 
 // we use these for keeping track of how long player has played
-int gameStartTimeSec, gameCurrentTimeSec;
+int levelStartTimeSec, levelCurrentTimeSec;
 /////////''/
 // by adding this to the player's y velocity every frame, we get gravity
 final float GRAVITY_POWER = 0.5; // try making it higher or lower!
 
 void setup() { // called automatically when the program starts
-  size(1000,710); // how large the window/screen is for the game
+  size(1000,710); // how large the window/screen is for the level
 
   font = loadFont("Avenir-Oblique-20.vlw");
 
   thomas = loadImage("thomas.png");
+  chris = loadImage("chris.png");
 
   cameraOffsetX = 0.0;
   frameRate(24); // this means draw() will be called 24 times per second
 
-  resetGame(); // sets up player, game level, and timer
+  resetLevel(); // sets up player, level level, and timer
 }
 
-void resetGame() {
+void resetLevel() {
   // multiple levels could be supported by copying in a different start grid
 
   theThomas.reset(); // reset everything about the player
+  theChris.reset();
 
   theWorld.reload(); // reset world map
 
   // reset timer in corner
-  gameCurrentTimeSec = gameStartTimeSec = millis()/1000; // dividing by 1000 to turn milliseconds into seconds
+  levelCurrentTimeSec = levelStartTimeSec = millis()/1000; // dividing by 1000 to turn milliseconds into seconds
 }
 
-Boolean gameWon() { // checks whether player has gotten to white rectangle
+Boolean levelWon() { // checks whether player has gotten to white rectangle
   PVector centerOfPlayer;
   // (remember that "position" is keeping track of bottom center of player)
   centerOfPlayer = new PVector(theThomas.position.x, theThomas.position.y-thomas.height/2);
@@ -63,7 +67,7 @@ void outlinedText(String sayThis, float atX, float atY) {
 void updateCameraPosition() {
   int rightEdge = World.GRID_UNITS_WIDE*World.GRID_UNIT_SIZE-width;
   // the left side of the camera view should never go right of the above number
-  // think of it as "total width of the game world" (World.GRID_UNITS_WIDE*World.GRID_UNIT_SIZE)
+  // think of it as "total width of the level world" (World.GRID_UNITS_WIDE*World.GRID_UNIT_SIZE)
   // minus "width of the screen/window" (width)
 
   cameraOffsetX = theThomas.position.x-width/2;
@@ -95,18 +99,18 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
     outlinedText("Click this area to play.\n\nUse arrows to move.\nSpacebar to jump.", width/2, height-90);
   } else {
     textAlign(RIGHT);
-    if (gameWon() == false) { // stop updating timer after player finishes
-      gameCurrentTimeSec = millis()/1000; // dividing by 1000 to turn milliseconds into seconds
+    if (levelWon() == false) { // stop updating timer after player finishes
+      levelCurrentTimeSec = millis()/1000; // dividing by 1000 to turn milliseconds into seconds
     }
-    int minutes = (gameCurrentTimeSec-gameStartTimeSec)/60;
-    int seconds = (gameCurrentTimeSec-gameStartTimeSec)%60;
+    int minutes = (levelCurrentTimeSec-levelStartTimeSec)/60;
+    int seconds = (levelCurrentTimeSec-levelStartTimeSec)%60;
     if (seconds < 10) { // pad the "0" into the tens position
       outlinedText(minutes +":0"+seconds, width-8, height-10);
     } else {
       outlinedText(minutes +":"+seconds, width-8, height-10);
     }
 
-    if (gameWon()) {
+    if (levelWon()) {
       textAlign(CENTER);
       outlinedText("You have finished the level!\nPress R to Reset.", width/2, height/2-12);
     }

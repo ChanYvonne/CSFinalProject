@@ -31,7 +31,7 @@ class Chris extends Player {
   }
 
   void checkForWallBumping() {
-    int thomasWidth = thomas.width; // think of image size of player standing as the player's physical size
+    int chrisWidth = chris.width; // think of image size of player standing as the player's physical size
     int thomasHeight = thomas.height;
     int wallProbeDistance = int(thomasWidth*0.3);
     int ceilingProbeDistance = int(thomasHeight*0.95);
