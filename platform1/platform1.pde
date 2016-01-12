@@ -13,7 +13,7 @@ PFont font;
 
 // we use these for keeping track of how long player has played
 int gameStartTimeSec, gameCurrentTimeSec;
-
+/////////''/
 // by adding this to the player's y velocity every frame, we get gravity
 final float GRAVITY_POWER = 0.5; // try making it higher or lower!
 

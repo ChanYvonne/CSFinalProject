@@ -25,23 +25,7 @@ abstract class Player {
   
   abstract void checkForWallBumping();
 
-  void checkForFalling() {
-    // If we're standing on an empty tile or end tile, we're not standing on anything. Fall!
-    if(theWorld.worldSquareAt(position)==World.TILE_EMPTY ||
-       theWorld.worldSquareAt(position)==World.TILE_END){
-       isOnGround=false;
-    }
-    
-    if(isOnGround==false) { // not on ground?    
-      if(theWorld.worldSquareAt(position)==World.TILE_SOLID) { // landed on solid square?
-        isOnGround = true;
-        position.y = theWorld.topOfSquare(position);
-        velocity.y = 0.0;
-      } else { // fall
-        velocity.y += GRAVITY_POWER;
-      }
-    }
-  }
+  abstract void checkForFalling();
 
   void move() {
     position.add(velocity);

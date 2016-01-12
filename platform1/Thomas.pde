@@ -11,6 +11,24 @@ class Thomas extends Player {
   Thomas() { // constructor, gets called automatically when the Thomas instance is created
     super();
   }
+  
+  void checkForFalling() {
+    // If we're standing on an empty tile or end tile, we're not standing on anything. Fall!
+    if(theWorld.worldSquareAt(position)==World.TILE_EMPTY ||
+       theWorld.worldSquareAt(position)==World.TILE_END){
+       isOnGround=false;
+    }
+    
+    if(isOnGround==false) { // not on ground?    
+      if(theWorld.worldSquareAt(position)==World.TILE_SOLID) { // landed on solid square?
+        isOnGround = true;
+        position.y = theWorld.topOfSquare(position);
+        velocity.y = 0.0;
+      } else { // fall
+        velocity.y += GRAVITY_POWER;
+      }
+    }
+  }
 
   void checkForWallBumping() {
     int thomasWidth = thomas.width; // think of image size of player standing as the player's physical size
