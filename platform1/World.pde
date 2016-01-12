@@ -125,8 +125,8 @@ class World {
           worldGrid[ii][i] = TILE_EMPTY; // put an empty tile in that spot
   
           // then update the player spot to the center of that tile
-          thePlayer.position.x = i*GRID_UNIT_SIZE+(GRID_UNIT_SIZE/2);
-          thePlayer.position.y = ii*GRID_UNIT_SIZE+(GRID_UNIT_SIZE/2);
+          theThomas.position.x = i*GRID_UNIT_SIZE+(GRID_UNIT_SIZE/2);
+          theThomas.position.y = ii*GRID_UNIT_SIZE+(GRID_UNIT_SIZE/2);
         } else {
           worldGrid[ii][i] = start_Grid[ii][i];
         }

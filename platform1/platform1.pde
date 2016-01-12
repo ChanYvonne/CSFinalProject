@@ -5,7 +5,7 @@ PImage thomas;
 // we use this to track how far the camera has scrolled left or right
 float cameraOffsetX;
 
-Thomas thePlayer = new Thomas();
+Thomas theThomas = new Thomas();
 World theWorld = new World();
 Keyboard theKeyboard = new Keyboard();
 
@@ -33,7 +33,7 @@ void setup() { // called automatically when the program starts
 void resetGame() {
   // multiple levels could be supported by copying in a different start grid
 
-  thePlayer.reset(); // reset everything about the player
+  theThomas.reset(); // reset everything about the player
 
   theWorld.reload(); // reset world map
 
@@ -44,7 +44,7 @@ void resetGame() {
 Boolean gameWon() { // checks whether player has gotten to white rectangle
   PVector centerOfPlayer;
   // (remember that "position" is keeping track of bottom center of player)
-  centerOfPlayer = new PVector(thePlayer.position.x, thePlayer.position.y-thomas.height/2);
+  centerOfPlayer = new PVector(theThomas.position.x, theThomas.position.y-thomas.height/2);
 
   return (theWorld.worldSquareAt(centerOfPlayer)==5);
 }
@@ -66,7 +66,7 @@ void updateCameraPosition() {
   // think of it as "total width of the game world" (World.GRID_UNITS_WIDE*World.GRID_UNIT_SIZE)
   // minus "width of the screen/window" (width)
 
-  cameraOffsetX = thePlayer.position.x-width/2;
+  cameraOffsetX = theThomas.position.x-width/2;
   if (cameraOffsetX < 0) {
     cameraOffsetX = 0;
   }
@@ -84,9 +84,9 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
 
   theWorld.render();
 
-  thePlayer.inputCheck();
-  thePlayer.move();
-  thePlayer.draw();
+  theThomas.inputCheck();
+  theThomas.move();
+  theThomas.draw();
 
   popMatrix(); // undoes the translate function from earlier in draw()
 
