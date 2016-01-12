@@ -135,7 +135,8 @@ class Thomas extends Player {
   void draw() {
     int thomasWidth = thomas.width;
     int thomasHeight = thomas.height;
-    /*
+    //image(thomas, xToBegin(theWorld.start_Grid), yToBegin(theWorld.start_Grid));
+    
     if(velocity.x<-TRIVIAL_SPEED) {
       facingRight = false;
     } else if(velocity.x>TRIVIAL_SPEED) {
@@ -150,6 +151,5 @@ class Thomas extends Player {
     translate(-thomasWidth/2,-thomasHeight); // drawing images centered on character's feet
     image(thomas, 0, 0);
     popMatrix(); // undoes all translate/scale/rotate calls since the pushMatrix earlier in this function
-  */
   }
 }

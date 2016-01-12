@@ -27,10 +27,35 @@ class World {
                          {1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5, 0},
                          {1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1}};
   // try changing numbers in that grid to make the level different! Look for the "static final int TILE_" lines
-  // up above in this same file for a key of what each number corresponds to.
-
+  // up above in this same file for a key of what each number corresponds to.  
   World() { // this gets called when World is created.
   }
+  
+  /*
+  //returns coordinates of Player's starting point
+  int yToBegin(int[][] start_Grid) {
+    int ycor = 0;
+    for (int i = 0; i <start_Grid.length; i++){
+      for (int x = 0; x < start_Grid[i].length; x++){
+        if (start_Grid[i][x] == 4){
+          ycor = i;
+        }
+      }
+    }
+    return ycor;
+  }
+  int xToBegin(int[][] start_Grid) {
+    int xcor = 0;
+    for (int i = 0; i <start_Grid.length; i++){
+      for (int x = 0; x < start_Grid[i].length; x++){
+        if (start_Grid[i][x] == 4){
+          xcor = x;
+        }
+      }
+    }
+    return xcor;
+  }
+  */
   
   // returns what type of tile is at a given pixel coordinate
   int worldSquareAt(PVector thisPosition) {
