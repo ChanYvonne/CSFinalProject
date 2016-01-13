@@ -1,9 +1,10 @@
 class World {
   static final int TILE_EMPTY = 0;
   static final int TILE_SOLID = 1;
-  static final int TILE_START = 4; // the player starts where this is placed
-  static final int TILE_END_THOMAS = 5; // this is where the end is (white rectangle)
-  static final int TITLE_END_CHRIS = 6;
+  static final int TILE_START_THOMAS = 4; // the players start where these are placed
+  static final int TILE_START_CHRIS = 3;
+  static final int TILE_END_THOMAS = 5; // this is where the ends are (white rectangle)
+  static final int TILE_END_CHRIS = 6;
   
   static final int GRID_UNIT_SIZE = 60; // size, in pixels, of each world unit square
   // if the above number becomes too small, how the player's wall bumping is detected may need to be updated
@@ -23,7 +24,7 @@ class World {
                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                          {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0},
-                         {0, 4, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                         {3, 4, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                          {1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0},
                          {1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 1, 5, 0},
                          {1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1}};
@@ -100,6 +101,8 @@ class World {
     int gridSpotY = int(thisPosition.y/GRID_UNIT_SIZE);
     return gridSpotY == start_Grid.length;
   }
+  
+  
   // these helper functions help us correct for the player moving into a world tile
   float topOfSquare(PVector thisPosition) {
     int thisY = int(thisPosition.y);
@@ -128,7 +131,7 @@ class World {
     
     for(int i=0;i<GRID_UNITS_WIDE;i++) {
       for(int ii=0;ii<GRID_UNITS_TALL;ii++) {
-        if(start_Grid[ii][i] == TILE_START) { // player start position
+        if(start_Grid[ii][i] == TILE_START_THOMAS) { // player start position
           worldGrid[ii][i] = TILE_EMPTY; // put an empty tile in that spot
   
           // then update the player spot to the center of that tile
@@ -139,6 +142,21 @@ class World {
         }
       }
     }
+    
+    for(int i=0;i<GRID_UNITS_WIDE;i++) {
+      for(int ii=0;ii<GRID_UNITS_TALL;ii++) {
+        if(start_Grid[ii][i] == TILE_START_CHRIS) { // player start position
+          worldGrid[ii][i] = TILE_EMPTY; // put an empty tile in that spot
+  
+          // then update the player spot to the center of that tile
+          theChris.position.x = i*GRID_UNIT_SIZE+(GRID_UNIT_SIZE/2);
+          theChris.position.y = ii*GRID_UNIT_SIZE+(GRID_UNIT_SIZE/2);
+        } else {
+          worldGrid[ii][i] = start_Grid[ii][i];
+        }
+      }
+    }
+    
   }
   
   void render() { // draw the world
@@ -151,7 +169,11 @@ class World {
             stroke(0); // faint dark outline. set to 0 (black) to remove entirely.
             fill(0); // black
             break;
-          case TILE_END:
+          case TILE_END_THOMAS:
+            stroke(255);
+            fill(255);
+            break;
+          case TILE_END_CHRIS:
             stroke(255);
             fill(255);
             break;

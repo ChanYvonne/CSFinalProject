@@ -110,7 +110,9 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
 
   theThomas.inputCheck();
   theThomas.move();
-  if (levelLost() == false){
+  theChris.inputCheck();
+  theChris.move();
+  if (levelLostThomas() == false || levelLostChris()){
   theThomas.draw();
   theChris.draw();
   }
@@ -122,7 +124,8 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
     outlinedText("Click this area to play.\n\nUse arrows to move.\nSpacebar to jump.", width/2, height-90);
   } else {
     textAlign(RIGHT);
-    if (levelWon() == false && levelLost() == false) { // stop updating timer after player finishes
+    if (levelWonThomas() == false && levelWonChris() == false && 
+        levelLostThomas() == false && levelLostChris() == false) { // stop updating timer after player finishes
       levelCurrentTimeSec = millis()/1000; // dividing by 1000 to turn milliseconds into seconds
     }
     int minutes = (levelCurrentTimeSec-levelStartTimeSec)/60;
@@ -133,12 +136,12 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
       outlinedText(minutes +":"+seconds, width-8, height-10);
     }
 
-    if (levelWon()) {
+    if (levelWonThomas() && levelWonChris()) {
       textAlign(CENTER);
       outlinedText("You have finished the level!\nPress R to Reset.", width/2, height/2-12);
     }
     
-    if (levelLost()) {
+    if (levelLostThomas() && levelLostChris()) {
       textAlign(CENTER);
       outlinedText("You have lost this level!\nPress R to Reset and try again.", width/2, height/2-12);
     }
