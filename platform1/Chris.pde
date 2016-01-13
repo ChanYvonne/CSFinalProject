@@ -133,10 +133,9 @@ class Chris extends Player {
   }
 
   void draw() {
-    int thomasWidth = thomas.width;
-    int thomasHeight = thomas.height;
-    //image(thomas, xToBegin(theWorld.start_Grid), yToBegin(theWorld.start_Grid));
-    
+    int chrisWidth = chris.width;
+    int chrisHeight = chris.height;
+      
     if(velocity.x<-TRIVIAL_SPEED) {
       facingRight = false;
     } else if(velocity.x>TRIVIAL_SPEED) {
@@ -148,8 +147,8 @@ class Chris extends Player {
     if(facingRight==false) {
       scale(-1,1); // flip horizontally by scaling horizontally by -100%
     }
-    translate(-thomasWidth/2,-thomasHeight); // drawing images centered on character's feet
-    image(thomas, 0, 0);
+    translate(-chrisWidth/2,-chrisHeight); // drawing images centered on character's feet
+    image(chris, 0, 0);
     popMatrix(); // undoes all translate/scale/rotate calls since the pushMatrix earlier in this function
   }
 }

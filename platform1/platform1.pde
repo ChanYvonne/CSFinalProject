@@ -45,7 +45,7 @@ void resetLevel() {
   levelCurrentTimeSec = levelStartTimeSec = millis()/1000; // dividing by 1000 to turn milliseconds into seconds
 }
 
-Boolean levelWon() { // checks whether player has gotten to white rectangle
+Boolean levelWonThomas() { // checks whether player has gotten to white rectangle
   PVector centerOfPlayer;
   // (remember that "position" is keeping track of bottom center of player)
   centerOfPlayer = new PVector(theThomas.position.x, theThomas.position.y-thomas.height/2);
@@ -53,10 +53,24 @@ Boolean levelWon() { // checks whether player has gotten to white rectangle
   return (theWorld.worldSquareAt(centerOfPlayer)==5);
 }
 
-Boolean levelLost(){ // checks whether player has fallen in the cracks aka died
+Boolean levelWonChris() { // checks whether player has gotten to white rectangle
+  PVector centerOfPlayer;
+  // (remember that "position" is keeping track of bottom center of player)
+  centerOfPlayer = new PVector(theChris.position.x, theChris.position.y-chris.height/2);
+
+  return (theWorld.worldSquareAt(centerOfPlayer)==6);
+}
+
+Boolean levelLostThomas(){ // checks whether player has fallen in the cracks aka died
   PVector bottomOfPlayer;
   bottomOfPlayer = new PVector(theThomas.position.x, theThomas.position.y-thomas.height);
   return theWorld.deathSquare(theThomas.position); 
+}
+
+Boolean levelLostChris(){ // checks whether player has fallen in the cracks aka died
+  PVector bottomOfPlayer;
+  bottomOfPlayer = new PVector(theChris.position.x, theChris.position.y-chris.height);
+  return theWorld.deathSquare(theChris.position); 
 }
 
 void outlinedText(String sayThis, float atX, float atY) {
@@ -98,6 +112,7 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
   theThomas.move();
   if (levelLost() == false){
   theThomas.draw();
+  theChris.draw();
   }
 
   popMatrix(); // undoes the translate function from earlier in draw()
@@ -107,7 +122,7 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
     outlinedText("Click this area to play.\n\nUse arrows to move.\nSpacebar to jump.", width/2, height-90);
   } else {
     textAlign(RIGHT);
-    if (levelWon() == false || levelLost() == true) { // stop updating timer after player finishes
+    if (levelWon() == false && levelLost() == false) { // stop updating timer after player finishes
       levelCurrentTimeSec = millis()/1000; // dividing by 1000 to turn milliseconds into seconds
     }
     int minutes = (levelCurrentTimeSec-levelStartTimeSec)/60;
