@@ -20,7 +20,7 @@ int levelStartTimeSec, levelCurrentTimeSec;
 final float GRAVITY_POWER = 0.5; // try making it higher or lower!
 
 void setup() { // called automatically when the program starts
-  size(1000,710); // how large the window/screen is for the level
+  size(1000,721); // how large the window/screen is for the level
 
   font = loadFont("Avenir-Oblique-20.vlw");
 
@@ -51,6 +51,12 @@ Boolean levelWon() { // checks whether player has gotten to white rectangle
   centerOfPlayer = new PVector(theThomas.position.x, theThomas.position.y-thomas.height/2);
 
   return (theWorld.worldSquareAt(centerOfPlayer)==5);
+}
+
+Boolean levelLost(){ // checks whether player has fallen in the cracks aka died
+  PVector bottomOfPlayer;
+  bottomOfPlayer = new PVector(theThomas.position.x, theThomas.position.y-thomas.height);
+  return theWorld.deathSquare(theThomas.position); 
 }
 
 void outlinedText(String sayThis, float atX, float atY) {
@@ -90,7 +96,9 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
 
   theThomas.inputCheck();
   theThomas.move();
+  if (levelLost() == false){
   theThomas.draw();
+  }
 
   popMatrix(); // undoes the translate function from earlier in draw()
 
@@ -99,7 +107,7 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
     outlinedText("Click this area to play.\n\nUse arrows to move.\nSpacebar to jump.", width/2, height-90);
   } else {
     textAlign(RIGHT);
-    if (levelWon() == false) { // stop updating timer after player finishes
+    if (levelWon() == false || levelLost() == true) { // stop updating timer after player finishes
       levelCurrentTimeSec = millis()/1000; // dividing by 1000 to turn milliseconds into seconds
     }
     int minutes = (levelCurrentTimeSec-levelStartTimeSec)/60;
@@ -113,6 +121,11 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
     if (levelWon()) {
       textAlign(CENTER);
       outlinedText("You have finished the level!\nPress R to Reset.", width/2, height/2-12);
+    }
+    
+    if (levelLost()) {
+      textAlign(CENTER);
+      outlinedText("You have lost this level!\nPress R to Reset and try again.", width/2, height/2-12);
     }
   }
 }

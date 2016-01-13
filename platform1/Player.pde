@@ -26,14 +26,6 @@ abstract class Player {
   abstract void checkForWallBumping();
 
   abstract void checkForFalling();
-  
-  /*
-  void dying(){
-    boolean died = false;
-    int thisY = 
-    if (position == 
-  }
-  */
 
   void move() {
     position.add(velocity);

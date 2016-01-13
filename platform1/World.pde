@@ -56,7 +56,9 @@ class World {
     return xcor;
   }
   */
-  
+  float tempGRID_UNIT_SIZE(){
+    return (float)(GRID_UNIT_SIZE);  
+  }
   // returns what type of tile is at a given pixel coordinate
   int worldSquareAt(PVector thisPosition) {
     float gridSpotX = thisPosition.x/GRID_UNIT_SIZE;
@@ -93,6 +95,10 @@ class World {
     worldGrid[gridSpotY][gridSpotX] = newTile;
   }
   
+  boolean deathSquare(PVector thisPosition){ //checks if player will die at this square 
+    int gridSpotY = int(thisPosition.y/GRID_UNIT_SIZE);
+    return gridSpotY == start_Grid.length;
+  }
   // these helper functions help us correct for the player moving into a world tile
   float topOfSquare(PVector thisPosition) {
     int thisY = int(thisPosition.y);

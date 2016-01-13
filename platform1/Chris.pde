@@ -32,9 +32,9 @@ class Chris extends Player {
 
   void checkForWallBumping() {
     int chrisWidth = chris.width; // think of image size of player standing as the player's physical size
-    int thomasHeight = thomas.height;
-    int wallProbeDistance = int(thomasWidth*0.3);
-    int ceilingProbeDistance = int(thomasHeight*0.95);
+    int chrisHeight = chris.height;
+    int wallProbeDistance = int(chrisWidth*0.3);
+    int ceilingProbeDistance = int(chrisHeight*0.95);
     
     /* Because of how we draw the player, "position" is the center of the feet/bottom
      * To detect and handle wall/ceiling collisions, we create 5 additional positions:
@@ -60,8 +60,8 @@ class Chris extends Player {
     // update wall probes
     leftSideHigh.x = leftSideLow.x = position.x - wallProbeDistance; // left edge of player
     rightSideHigh.x = rightSideLow.x = position.x + wallProbeDistance; // right edge of player
-    leftSideLow.y = rightSideLow.y = position.y-0.2*thomasHeight; // shin high
-    leftSideHigh.y = rightSideHigh.y = position.y-0.8*thomasHeight; // shoulder high
+    leftSideLow.y = rightSideLow.y = position.y-0.2*chrisHeight; // shin high
+    leftSideHigh.y = rightSideHigh.y = position.y-0.8*chrisHeight; // shoulder high
 
     topSide.x = position.x; // center of player
     topSide.y = position.y-ceilingProbeDistance; // top of guy
