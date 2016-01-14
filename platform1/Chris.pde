@@ -20,7 +20,9 @@ class Chris extends Player {
     }
     
     if(isOnGround==false) { // not on ground?    
-      if(theWorld.worldSquareAt(position)==World.TILE_SOLID) { // landed on solid square?
+      if(theWorld.worldSquareAt(position)==World.TILE_SOLID ||
+        theWorld.bottomOfSquare(position) == theWorld.topOfSquare(theChris.position) ||
+        theWorld.topOfSquare(position) == theWorld.bottomOfSquare(theChris.position)) { // landed on solid square?
         isOnGround = true;
         position.y = theWorld.topOfSquare(position);
         velocity.y = 0.0;
