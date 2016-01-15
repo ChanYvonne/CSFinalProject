@@ -1,4 +1,4 @@
-class World {
+ class World {
   static final int TILE_EMPTY = 0;
   static final int TILE_SOLID = 1;
   static final int TILE_START_THOMAS = 4; // the players start where these are placed
@@ -57,11 +57,11 @@ class World {
     }
     return xcor;
   }
-
+  */
   float tempGRID_UNIT_SIZE(){
     return (float)(GRID_UNIT_SIZE);  
   }
-  */
+
   // returns what type of tile is at a given pixel coordinate
   int worldSquareAt(PVector thisPosition) {
     float gridSpotX = thisPosition.x/GRID_UNIT_SIZE;
@@ -126,6 +126,23 @@ class World {
       return 0;
     }
     return leftOfSquare(thisPosition)+GRID_UNIT_SIZE;
+  }
+  
+  //helps ensure players cannot trample other players
+  float bottomOfPlayer(Player P1){
+    return P1.position.y + theWorld.tempGRID_UNIT_SIZE();
+  }
+  
+  float topOfPlayer(Player P1){
+    return P1.position.y;
+  }
+  
+  float leftOfPlayer(Player P1){
+    return P1.position.x;
+  }
+  
+  float rightOfPlayer(Player P1){
+    return P1.position.x + theWorld.tempGRID_UNIT_SIZE();
   }
   
   void reload() {

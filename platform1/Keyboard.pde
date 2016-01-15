@@ -1,9 +1,9 @@
 class Keyboard {
   // used to track keyboard input
-  Boolean holdingUp,holdingRight,holdingLeft,holdingSpace;
+  Boolean holdingUp,holdingRight,holdingLeft,holdingSpace,holdingTab;
   
   Keyboard() {
-    holdingUp=holdingRight=holdingLeft=holdingSpace=false;
+    holdingUp=holdingRight=holdingLeft=holdingSpace=holdingTab=false;
   }
   
   /* The way that Processing, and many programming languages/environments, deals with keys is
@@ -29,6 +29,10 @@ class Keyboard {
     if (key == ' ') {
       holdingSpace = true;
     }
+    
+    if (key == TAB){
+      holdingTab = true;
+    }
   }
   void releaseKey(int key,int keyCode) {
     if (keyCode == UP) {
@@ -42,6 +46,9 @@ class Keyboard {
     }
     if (keyCode == ' ') {
       holdingSpace = false;
+    }
+    if (key == TAB){
+      holdingTab = false;
     }
   }
 }

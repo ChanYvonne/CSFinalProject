@@ -38,7 +38,7 @@ class Chris extends Player {
         theWorld.rightOfSquare(position) == theWorld.leftOfSquare(theChris.position)
   */
 
-  
+  void checkForWallBumping() {
     int chrisWidth = chris.width; // think of image size of player standing as the player's physical size
     int chrisHeight = chris.height;
     int wallProbeDistance = int(chrisWidth*0.3);
@@ -76,7 +76,6 @@ class Chris extends Player {
     // the following conditionals just check for collisions with each bump probe
     // depending upon which probe has collided, we push the player back the opposite direction
     
-  void checkForWallBumping() {
     if( theWorld.worldSquareAt(topSide)==World.TILE_SOLID) {
       if(theWorld.worldSquareAt(position)==World.TILE_SOLID) {
         position.sub(velocity);

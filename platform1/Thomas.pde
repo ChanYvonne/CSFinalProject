@@ -30,7 +30,7 @@ class Thomas extends Player {
     }
   }
 
-  
+  void checkForWallBumping() {
     int thomasWidth = thomas.width; // think of image size of player standing as the player's physical size
     int thomasHeight = thomas.height;
     int wallProbeDistance = int(thomasWidth*0.3);
@@ -51,27 +51,26 @@ class Thomas extends Player {
     
     // used as probes to detect running into walls, ceiling
     PVector leftSideHigh,rightSideHigh,leftSideLow,rightSideLow,topSide;
-    leftSideHigh = new PVector();
-    rightSideHigh = new PVector();
-    leftSideLow = new PVector();
-    rightSideLow = new PVector();
-    topSide = new PVector();
-
-    // update wall probes
-    leftSideHigh.x = leftSideLow.x = position.x - wallProbeDistance; // left edge of player
-    rightSideHigh.x = rightSideLow.x = position.x + wallProbeDistance; // right edge of player
-    leftSideLow.y = rightSideLow.y = position.y-0.2*thomasHeight; // shin high
-    leftSideHigh.y = rightSideHigh.y = position.y-0.8*thomasHeight; // shoulder high
-
-    topSide.x = position.x; // center of player
-    topSide.y = position.y-ceilingProbeDistance; // top of guy
-    
+     leftSideHigh = new PVector();
+     rightSideHigh = new PVector();
+     leftSideLow = new PVector();
+     rightSideLow = new PVector();
+     topSide = new PVector();
+ 
+     // update wall probes
+     leftSideHigh.x = leftSideLow.x = position.x - wallProbeDistance; // left edge of player
+     rightSideHigh.x = rightSideLow.x = position.x + wallProbeDistance; // right edge of player
+     leftSideLow.y = rightSideLow.y = position.y-0.2*thomasHeight; // shin high
+     leftSideHigh.y = rightSideHigh.y = position.y-0.8*thomasHeight; // shoulder high
+ 
+     topSide.x = position.x; // center of player
+     topSide.y = position.y-ceilingProbeDistance; // top of guy
+ 
     // the following conditionals just check for collisions with each bump probe
     // depending upon which probe has collided, we push the player back the opposite direction
     
-  void checkForWallBumping() {
-    if( theWorld.worldSquareAt(topSide)==World.TILE_SOLID || 
-        theWorld.worldSquareAt(topSide) == theWorld.worldSquareAt(Chris.topSide)) {
+  
+    if( theWorld.worldSquareAt(topSide)==World.TILE_SOLID) {
       if(theWorld.worldSquareAt(position)==World.TILE_SOLID) {
         position.sub(velocity);
         velocity.x=0.0;
@@ -84,32 +83,28 @@ class Thomas extends Player {
       }
     }
     
-    if( theWorld.worldSquareAt(leftSideLow)==World.TILE_SOLID || 
-        theWorld.worldSquareAt(leftSideLow) == theWorld.worldSquareAt(Chris.rightSideLow)) {
+    if( theWorld.worldSquareAt(leftSideLow)==World.TILE_SOLID) {
       position.x = theWorld.rightOfSquare(leftSideLow)+wallProbeDistance;
       if(velocity.x < 0) {
         velocity.x = 0.0;
       }
     }
    
-    if( theWorld.worldSquareAt(leftSideHigh)==World.TILE_SOLID || 
-        theWorld.worldSquareAt(leftSideHigh) == theWorld.worldSquareAt(Chris.rightSideHigh)) {
+    if( theWorld.worldSquareAt(leftSideHigh)==World.TILE_SOLID) {
       position.x = theWorld.rightOfSquare(leftSideHigh)+wallProbeDistance;
       if(velocity.x < 0) {
         velocity.x = 0.0;
       }
     }
    
-    if( theWorld.worldSquareAt(rightSideLow)==World.TILE_SOLID || 
-        theWorld.worldSquareAt(rightSideLow) == theWorld.worldSquareAt(Chris.leftSideLow)) {
+    if( theWorld.worldSquareAt(rightSideLow)==World.TILE_SOLID) {
       position.x = theWorld.leftOfSquare(rightSideLow)-wallProbeDistance;
       if(velocity.x > 0) {
         velocity.x = 0.0;
       }
     }
    
-    if( theWorld.worldSquareAt(rightSideHigh)==World.TILE_SOLID || 
-        theWorld.worldSquareAt(rightSideHigh) == theWorld.worldSquareAt(Chris.leftSideHigh)) {
+    if( theWorld.worldSquareAt(rightSideHigh)==World.TILE_SOLID) {
       position.x = theWorld.leftOfSquare(rightSideHigh)-wallProbeDistance;
       if(velocity.x > 0) {
         velocity.x = 0.0;
