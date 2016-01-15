@@ -21,6 +21,13 @@ abstract class Player {
     velocity.y = 0;
   }
   
+  /*
+  //helps ensure players cannot trample other players
+  boolean bottomOfPlayer(PVector P1Position,P2Postion){
+    if (P1Position
+  }
+  */
+  
   abstract void inputCheck();
   
   abstract void checkForWallBumping();

@@ -20,9 +20,7 @@ class Chris extends Player {
     }
     
     if(isOnGround==false) { // not on ground?    
-      if(theWorld.worldSquareAt(position)==World.TILE_SOLID ||
-        theWorld.bottomOfSquare(position) == theWorld.topOfSquare(theChris.position) ||
-        theWorld.topOfSquare(position) == theWorld.bottomOfSquare(theChris.position)) { // landed on solid square?
+      if(theWorld.worldSquareAt(position)==World.TILE_SOLID) { // landed on solid square?
         isOnGround = true;
         position.y = theWorld.topOfSquare(position);
         velocity.y = 0.0;
@@ -31,8 +29,16 @@ class Chris extends Player {
       }
     }
   }
+  
+  /*
+   || 
+        theWorld.bottomOfSquare(position) == theWorld.topOfSquare(theChris.position) ||
+        theWorld.topOfSquare(position) == theWorld.bottomOfSquare(theChris.position) ||
+        theWorld.leftOfSquare(position) == theWorld.rightOfSquare(theChris.position) ||
+        theWorld.rightOfSquare(position) == theWorld.leftOfSquare(theChris.position)
+  */
 
-  void checkForWallBumping() {
+  
     int chrisWidth = chris.width; // think of image size of player standing as the player's physical size
     int chrisHeight = chris.height;
     int wallProbeDistance = int(chrisWidth*0.3);
@@ -52,12 +58,11 @@ class Chris extends Player {
      */
     
     // used as probes to detect running into walls, ceiling
-    PVector leftSideHigh,rightSideHigh,leftSideLow,rightSideLow,topSide;
-    leftSideHigh = new PVector();
-    rightSideHigh = new PVector();
-    leftSideLow = new PVector();
-    rightSideLow = new PVector();
-    topSide = new PVector();
+    PVector leftSideHigh = new PVector();
+    PVector rightSideHigh = new PVector();
+    PVector leftSideLow = new PVector();
+    PVector rightSideLow = new PVector();
+    PVector topSide = new PVector();
 
     // update wall probes
     leftSideHigh.x = leftSideLow.x = position.x - wallProbeDistance; // left edge of player
@@ -71,6 +76,7 @@ class Chris extends Player {
     // the following conditionals just check for collisions with each bump probe
     // depending upon which probe has collided, we push the player back the opposite direction
     
+  void checkForWallBumping() {
     if( theWorld.worldSquareAt(topSide)==World.TILE_SOLID) {
       if(theWorld.worldSquareAt(position)==World.TILE_SOLID) {
         position.sub(velocity);

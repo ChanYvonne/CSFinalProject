@@ -128,13 +128,6 @@ class World {
     return leftOfSquare(thisPosition)+GRID_UNIT_SIZE;
   }
   
-  /*
-  //helps ensure players cannot trample other players
-  boolean bottomOfPlayer(PVector P1Position,P2Postion){
-    if (P1Position
-  }
-  */
-  
   void reload() {
     
     for(int i=0;i<GRID_UNITS_WIDE;i++) {

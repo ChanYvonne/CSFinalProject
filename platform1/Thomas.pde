@@ -20,9 +20,7 @@ class Thomas extends Player {
     }
     
     if(isOnGround==false) { // not on ground?    
-      if(theWorld.worldSquareAt(position)== World.TILE_SOLID || 
-        theWorld.bottomOfSquare(position) == theWorld.topOfSquare(theChris.position) ||
-        theWorld.topOfSquare(position) == theWorld.bottomOfSquare(theChris.position)) { // landed on solid square?
+      if(theWorld.worldSquareAt(position)== World.TILE_SOLID) { // landed on solid square?
         isOnGround = true;
         position.y = theWorld.topOfSquare(position);
         velocity.y = 0.0;
@@ -32,7 +30,7 @@ class Thomas extends Player {
     }
   }
 
-  void checkForWallBumping() {
+  
     int thomasWidth = thomas.width; // think of image size of player standing as the player's physical size
     int thomasHeight = thomas.height;
     int wallProbeDistance = int(thomasWidth*0.3);
@@ -71,7 +69,9 @@ class Thomas extends Player {
     // the following conditionals just check for collisions with each bump probe
     // depending upon which probe has collided, we push the player back the opposite direction
     
-    if( theWorld.worldSquareAt(topSide)==World.TILE_SOLID) {
+  void checkForWallBumping() {
+    if( theWorld.worldSquareAt(topSide)==World.TILE_SOLID || 
+        theWorld.worldSquareAt(topSide) == theWorld.worldSquareAt(Chris.topSide)) {
       if(theWorld.worldSquareAt(position)==World.TILE_SOLID) {
         position.sub(velocity);
         velocity.x=0.0;
@@ -84,28 +84,32 @@ class Thomas extends Player {
       }
     }
     
-    if( theWorld.worldSquareAt(leftSideLow)==World.TILE_SOLID) {
+    if( theWorld.worldSquareAt(leftSideLow)==World.TILE_SOLID || 
+        theWorld.worldSquareAt(leftSideLow) == theWorld.worldSquareAt(Chris.rightSideLow)) {
       position.x = theWorld.rightOfSquare(leftSideLow)+wallProbeDistance;
       if(velocity.x < 0) {
         velocity.x = 0.0;
       }
     }
    
-    if( theWorld.worldSquareAt(leftSideHigh)==World.TILE_SOLID) {
+    if( theWorld.worldSquareAt(leftSideHigh)==World.TILE_SOLID || 
+        theWorld.worldSquareAt(leftSideHigh) == theWorld.worldSquareAt(Chris.rightSideHigh)) {
       position.x = theWorld.rightOfSquare(leftSideHigh)+wallProbeDistance;
       if(velocity.x < 0) {
         velocity.x = 0.0;
       }
     }
    
-    if( theWorld.worldSquareAt(rightSideLow)==World.TILE_SOLID) {
+    if( theWorld.worldSquareAt(rightSideLow)==World.TILE_SOLID || 
+        theWorld.worldSquareAt(rightSideLow) == theWorld.worldSquareAt(Chris.leftSideLow)) {
       position.x = theWorld.leftOfSquare(rightSideLow)-wallProbeDistance;
       if(velocity.x > 0) {
         velocity.x = 0.0;
       }
     }
    
-    if( theWorld.worldSquareAt(rightSideHigh)==World.TILE_SOLID) {
+    if( theWorld.worldSquareAt(rightSideHigh)==World.TILE_SOLID || 
+        theWorld.worldSquareAt(rightSideHigh) == theWorld.worldSquareAt(Chris.leftSideHigh)) {
       position.x = theWorld.leftOfSquare(rightSideHigh)-wallProbeDistance;
       if(velocity.x > 0) {
         velocity.x = 0.0;
