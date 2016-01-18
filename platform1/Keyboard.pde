@@ -1,9 +1,9 @@
 class Keyboard {
   // used to track keyboard input
-  Boolean holdingUp,holdingRight,holdingLeft,holdingSpace,holdingTab;
+  Boolean holdingUp,holdingRight,holdingLeft,holdingSpace;
   
   Keyboard() {
-    holdingUp=holdingRight=holdingLeft=holdingSpace=holdingTab=false;
+    holdingUp=holdingRight=holdingLeft=holdingSpace=false;
   }
   
   /* The way that Processing, and many programming languages/environments, deals with keys is
@@ -15,6 +15,10 @@ class Keyboard {
   void pressKey(int key,int keyCode) {
     if(key == 'r') { // never will be held down, so no Boolean needed to track it
       resetLevel(); // then R key resets it
+    }
+    
+    if (key == TAB){
+      switchPlayer(); //same conditions as r above
     }
    
     if (keyCode == UP) {
@@ -29,10 +33,6 @@ class Keyboard {
     if (key == ' ') {
       holdingSpace = true;
     }
-    
-    if (key == TAB){
-      holdingTab = true;
-    }
   }
   void releaseKey(int key,int keyCode) {
     if (keyCode == UP) {
@@ -46,9 +46,6 @@ class Keyboard {
     }
     if (keyCode == ' ') {
       holdingSpace = false;
-    }
-    if (key == TAB){
-      holdingTab = false;
     }
   }
 }

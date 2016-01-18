@@ -10,6 +10,7 @@ Thomas theThomas = new Thomas();
 World theWorld = new World();
 Keyboard theKeyboard = new Keyboard();
 Chris theChris = new Chris();
+Player currentPlayer = theThomas;
 
 PFont font;
 
@@ -43,6 +44,15 @@ void resetLevel() {
 
   // reset timer in corner
   levelCurrentTimeSec = levelStartTimeSec = millis()/1000; // dividing by 1000 to turn milliseconds into seconds
+}
+
+void switchPlayer(){ //changes the control of the player chronologically
+  if (currentPlayer == theThomas){
+    currentPlayer = theChris;
+  }
+  if (currentPlayer == theChris){
+    currentPlayer = theThomas;
+  }
 }
 
 Boolean levelWonThomas() { // checks whether player has gotten to white rectangle
@@ -108,13 +118,16 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
 
   theWorld.render();
 
+if (currentPlayer == theThomas){
   theThomas.inputCheck();
   theThomas.move();
+}else if (currentPlayer == theChris){
   theChris.inputCheck();
   theChris.move();
-  if (levelLostThomas() == false || levelLostChris()){
-  theThomas.draw();
-  theChris.draw();
+}
+  if (levelLostThomas() == false || levelLostChris() == false){
+    theThomas.draw();
+    theChris.draw();
   }
 
   popMatrix(); // undoes the translate function from earlier in draw()
@@ -124,8 +137,7 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
     outlinedText("Click this area to play.\n\nUse arrows to move.\nSpacebar to jump.", width/2, height-90);
   } else {
     textAlign(RIGHT);
-    if (levelWonThomas() == false && levelWonChris() == false && 
-        levelLostThomas() == false && levelLostChris() == false) { // stop updating timer after player finishes
+    if (levelWonThomas() == false && levelWonChris() == false) { // stop updating timer after player finishes
       levelCurrentTimeSec = millis()/1000; // dividing by 1000 to turn milliseconds into seconds
     }
     int minutes = (levelCurrentTimeSec-levelStartTimeSec)/60;
