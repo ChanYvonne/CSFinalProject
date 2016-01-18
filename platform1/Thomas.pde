@@ -15,6 +15,7 @@ class Thomas extends Player {
   void checkForFalling() {
     // If we're standing on an empty tile or end tile, we're not standing on anything. Fall!
     if(theWorld.worldSquareAt(position)==World.TILE_EMPTY ||
+       //theWorld.worldSquareAt(position)==World.TILE_START_THOMAS||
        theWorld.worldSquareAt(position)==World.TILE_END_THOMAS){
        isOnGround=false;
     }
