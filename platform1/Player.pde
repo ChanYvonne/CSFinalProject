@@ -35,5 +35,32 @@ abstract class Player {
     checkForFalling();
   }
   
+  /*
+  void checkForPlayerBumping(){ //so that the players won't trample each other
+    int thomasWidth = thomas.width; // think of image size of player standing as the player's physical size
+    int thomasHeight = thomas.height;
+    int wallProbeDistance = int(thomasWidth*0.2);
+    int ceilingProbeDistance = int(thomasHeight*0.95);
+    
+    // used as probes to detect running into walls, ceiling
+    PVector leftSideHigh,rightSideHigh,leftSideLow,rightSideLow,topSide;
+     leftSideHigh = new PVector();
+     rightSideHigh = new PVector();
+     leftSideLow = new PVector();
+     rightSideLow = new PVector();
+     topSide = new PVector();
+ 
+     // update wall probes
+     leftSideHigh.x = leftSideLow.x = position.x - wallProbeDistance; // left edge of player
+     rightSideHigh.x = rightSideLow.x = position.x + wallProbeDistance; // right edge of player
+     leftSideLow.y = rightSideLow.y = position.y-0.2*thomasHeight; // shin high
+     leftSideHigh.y = rightSideHigh.y = position.y-0.8*thomasHeight; // shoulder high
+ 
+     topSide.x = position.x; // center of player
+     topSide.y = position.y-ceilingProbeDistance; // top of guy
+  }
+  */
+
+  
   abstract void draw();
 }

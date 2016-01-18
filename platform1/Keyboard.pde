@@ -13,11 +13,11 @@ class Keyboard {
    */
 
   void pressKey(int key,int keyCode) {
-    if(key == 'r') { // never will be held down, so no Boolean needed to track it
+    if(key == 'r' || key == 'R') { // never will be held down, so no Boolean needed to track it
       resetLevel(); // then R key resets it
     }
     
-    if (key == TAB){
+    if (key == 'q' || key == 'Q'){
       switchPlayer(); //same conditions as r above
     }
    

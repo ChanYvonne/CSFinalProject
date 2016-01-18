@@ -29,11 +29,11 @@ class Thomas extends Player {
       }
     }
   }
-
+  
   void checkForWallBumping() {
     int thomasWidth = thomas.width; // think of image size of player standing as the player's physical size
     int thomasHeight = thomas.height;
-    int wallProbeDistance = int(thomasWidth*0.3);
+    int wallProbeDistance = int(thomasWidth*0.2);
     int ceilingProbeDistance = int(thomasHeight*0.95);
     
     /* Because of how we draw the player, "position" is the center of the feet/bottom

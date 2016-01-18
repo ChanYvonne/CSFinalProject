@@ -1,7 +1,7 @@
 // for storing and referencing animation frames for the player character
 PImage thomas;
 PImage chris;
-
+PImage cursor;
 
 // we use this to track how far the camera has scrolled left or right
 float cameraOffsetX;
@@ -27,6 +27,9 @@ void setup() { // called automatically when the program starts
 
   thomas = loadImage("thomas.png");
   chris = loadImage("chris.png");
+  cursor = loadImage("cursor.png");
+  
+  
 
   cameraOffsetX = 0.0;
   frameRate(24); // this means draw() will be called 24 times per second
@@ -49,8 +52,7 @@ void resetLevel() {
 void switchPlayer(){ //changes the control of the player chronologically
   if (currentPlayer == theThomas){
     currentPlayer = theChris;
-  }
-  if (currentPlayer == theChris){
+  }else if (currentPlayer == theChris){
     currentPlayer = theThomas;
   }
 }
@@ -117,15 +119,18 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
   updateCameraPosition();
 
   theWorld.render();
-
-if (currentPlayer == theThomas){
-  theThomas.inputCheck();
-  theThomas.move();
-}else if (currentPlayer == theChris){
-  theChris.inputCheck();
-  theChris.move();
-}
+  
   if (levelLostThomas() == false || levelLostChris() == false){
+    if (currentPlayer == theThomas){
+      image(cursor, theThomas.position.x- 0.3*thomas.width, theThomas.position.y - 1.4*thomas.height);
+      theThomas.inputCheck();
+      theThomas.move();
+    }
+    if (currentPlayer == theChris){
+      image(cursor, theChris.position.x-0.3*chris.width, theChris.position.y - 1.5*chris.height);
+      theChris.inputCheck();
+      theChris.move();
+    }
     theThomas.draw();
     theChris.draw();
   }
@@ -134,7 +139,7 @@ if (currentPlayer == theThomas){
 
   if (focused == false) { // does the window currently not have keyboard focus?
     textAlign(CENTER);
-    outlinedText("Click this area to play.\n\nUse arrows to move.\nSpacebar to jump.", width/2, height-90);
+    outlinedText("Click this area to play.\n\nUse arrows to move.\nSpacebar to jump.\nQ to switch characters.", width/2, height-90);
   } else {
     textAlign(RIGHT);
     if (levelWonThomas() == false && levelWonChris() == false) { // stop updating timer after player finishes
