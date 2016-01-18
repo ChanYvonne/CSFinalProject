@@ -1,6 +1,6 @@
 class Thomas extends Player {
   
-  final float JUMP_POWER = 11.0; // how hard the player jolts upward on jump
+  final float JUMP_POWER = 13.0; // how hard the player jolts upward on jump
   final float RUN_SPEED = 5.0; // force of player movement on ground, in pixels/cycle
   final float AIR_RUN_SPEED = 2.0; // like run speed, but used for control while in the air
   final float SLOWDOWN_PERC = 0.6; // friction from the ground. multiplied by the x speed each frame.
@@ -111,6 +111,45 @@ class Thomas extends Player {
       }
     }
   }
+  
+  /* modified version when it kept returning nullPointerException
+  
+  if( theWorld.worldSquareAt(leftSideLow)==World.TILE_SOLID ||
+        (theWorld.worldSpotX(leftSideLow) == theWorld.worldSpotX(theChris.rightSideLow)) &&
+        (theWorld.worldSpotY(leftSideLow) == theWorld.worldSpotY(theChris.rightSideLow))){
+      position.x = theWorld.rightOfSquare(leftSideLow)+wallProbeDistance;
+      if(velocity.x < 0) {
+        velocity.x = 0.0;
+      }
+    }
+   
+    if( theWorld.worldSquareAt(leftSideHigh)==World.TILE_SOLID ||
+        (theWorld.worldSpotX(leftSideHigh) == theWorld.worldSpotX(theChris.rightSideHigh)) &&
+        (theWorld.worldSpotY(leftSideHigh) == theWorld.worldSpotY(theChris.rightSideHigh))){
+      position.x = theWorld.rightOfSquare(leftSideHigh)+wallProbeDistance;
+      if(velocity.x < 0) {
+        velocity.x = 0.0;
+      }
+    }
+   
+    if( theWorld.worldSquareAt(rightSideLow)==World.TILE_SOLID ||
+        (theWorld.worldSpotX(rightSideLow) == theWorld.worldSpotX(theChris.leftSideLow)) &&
+        (theWorld.worldSpotY(rightSideLow) == theWorld.worldSpotY(theChris.leftSideLow))){
+      position.x = theWorld.leftOfSquare(rightSideLow)-wallProbeDistance;
+      if(velocity.x > 0) {
+        velocity.x = 0.0;
+      }
+    }
+   
+    if( theWorld.worldSquareAt(rightSideHigh)==World.TILE_SOLID||
+        (theWorld.worldSpotX(rightSideHigh) == theWorld.worldSpotX(theChris.leftSideHigh)) &&
+        (theWorld.worldSpotY(rightSideHigh) == theWorld.worldSpotY(theChris.leftSideHigh))){
+      position.x = theWorld.leftOfSquare(rightSideHigh)-wallProbeDistance;
+      if(velocity.x > 0) {
+        velocity.x = 0.0;
+      }
+    }
+    */
 
   void inputCheck() {
     // keyboard flags are set by keyPressed/keyReleased in the main .pde

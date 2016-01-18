@@ -1,6 +1,6 @@
 class Chris extends Player {
   
-  final float JUMP_POWER = 5.0; // how hard the player jolts upward on jump
+  final float JUMP_POWER = 10.0; // how hard the player jolts upward on jump
   final float RUN_SPEED = 5.0; // force of player movement on ground, in pixels/cycle
   final float AIR_RUN_SPEED = 2.0; // like run speed, but used for control while in the air
   final float SLOWDOWN_PERC = 0.6; // friction from the ground. multiplied by the x speed each frame.
