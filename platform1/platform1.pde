@@ -85,6 +85,7 @@ Boolean levelLostChris(){ // checks whether player has fallen in the cracks aka 
   return theWorld.deathSquare(theChris.position); 
 }
 
+/*
 void checkForPlayerBumping(){  
   if(((theChris.getPosY() >= theThomas.getPosY() - thomas.height && theThomas.getPosY() >= theChris.getPosY()) ||
   (theThomas.getPosY() >= theChris.getPosY() - chris.height && theChris.getPosY() >= theThomas.getPosY())) &&
@@ -93,6 +94,7 @@ void checkForPlayerBumping(){
     theThomas.resetVelocity();
   }
 }
+*/
 
 void outlinedText(String sayThis, float atX, float atY) {
   textFont(font); // use the font we loaded
@@ -144,7 +146,6 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
       theChris.inputCheck();
       theChris.move();
     }
-    checkForPlayerBumping();
     theThomas.draw();
     theChris.draw();
   }
