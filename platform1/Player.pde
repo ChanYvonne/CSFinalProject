@@ -20,6 +20,19 @@ abstract class Player {
     velocity.x = 0;
     velocity.y = 0;
   }
+  
+  float getPosX(){
+    return position.x;
+  }
+  
+  float getPosY(){
+    return position.y;
+  }
+  
+  void resetVelocity(){
+    velocity.x = 0;
+    velocity.y = 0;
+  }
     
   abstract void inputCheck();
   

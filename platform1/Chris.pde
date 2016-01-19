@@ -1,5 +1,4 @@
 class Chris extends Player {
-  
   final float JUMP_POWER = 10.0; // how hard the player jolts upward on jump
   final float RUN_SPEED = 5.0; // force of player movement on ground, in pixels/cycle
   final float AIR_RUN_SPEED = 2.0; // like run speed, but used for control while in the air
@@ -118,7 +117,7 @@ class Chris extends Player {
       }
     }
   }
-
+  
   void inputCheck() {
     // keyboard flags are set by keyPressed/keyReleased in the main .pde
     
