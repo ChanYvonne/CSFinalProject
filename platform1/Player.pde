@@ -1,5 +1,20 @@
 abstract class Player {
   PVector position,velocity; // PVector contains two floats, x and y
+  
+  // used as probes to detect running into walls, ceiling, other players
+  PVector leftSideHigh = new PVector();
+  PVector rightSideHigh = new PVector();
+  PVector leftSideLow = new PVector();
+  PVector rightSideLow = new PVector();
+  PVector topSide = new PVector();
+  int wallProbeDistance;
+  int ceilingProbeDistance;
+  
+  int thomasWidth = thomas.width; // think of image size of player standing as the player's physical size
+  int thomasHeight = thomas.height;
+  
+  int chrisWidth = chris.width; // think of image size of player standing as the player's physical size
+  int chrisHeight = chris.height;
 
   Boolean isOnGround; // used to keep track of whether the player is on the ground. useful for control and animation.
   Boolean facingRight; // used to keep track of which direction the player last moved in. used to flip player image.
@@ -39,6 +54,8 @@ abstract class Player {
   abstract void checkForWallBumping();
 
   abstract void checkForFalling();
+  
+  abstract void checkForPlayerBumping();
 
   void move() {
     position.add(velocity);
