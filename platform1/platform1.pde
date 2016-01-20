@@ -2,6 +2,7 @@
 PImage thomas;
 PImage chris;
 PImage cursor;
+Boolean StartScreen;
 
 // we use this to track how far the camera has scrolled left or right
 float cameraOffsetX;
@@ -28,13 +29,16 @@ void setup() { // called automatically when the program starts
   thomas = loadImage("thomas.png");
   chris = loadImage("chris.png");
   cursor = loadImage("cursor.png");
-  
-  
+  StartScreen = true;
+  if (StartScreen){
+    background(32,36,55);
+  }else{
 
   cameraOffsetX = 0.0;
   frameRate(24); // this means draw() will be called 24 times per second
 
   resetLevel(); // sets up player, level level, and timer
+  }
 }
 
 void resetLevel() {
@@ -126,7 +130,7 @@ void updateCameraPosition() {
   }
 }
 
-void draw() { // called automatically, 24 times per second because of setup()'s call to frameRate(24)
+void draw() { // called automatically, 24 times per second because of setup()'s call to frameRate(24
   pushMatrix(); // lets us easily undo the upcoming translate call
   translate(-cameraOffsetX, 0.0); // affects all upcoming graphics calls, until popMatrix
 

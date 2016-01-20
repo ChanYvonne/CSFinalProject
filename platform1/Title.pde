@@ -1,3 +1,3 @@
-class Title extends World{
+class Title{
   
 }
