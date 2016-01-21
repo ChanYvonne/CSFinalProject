@@ -8,16 +8,7 @@ class Chris extends Player {
   final float TRIVIAL_SPEED = 1.0; // if under this speed, the player is drawn as standing still
   
   Chris() { // constructor, gets called automatically when the Thomas instance is created
-    super();
-    wallProbeDistance = int(chrisWidth*0.5);
-    ceilingProbeDistance = int(chrisHeight);
-    leftSideHigh.x = leftSideLow.x = position.x - wallProbeDistance; // left edge of player
-    rightSideHigh.x = rightSideLow.x = position.x + wallProbeDistance; // right edge of player
-    leftSideLow.y = rightSideLow.y = position.y; // shin high
-    leftSideHigh.y = rightSideHigh.y = position.y-chrisHeight; // shoulder high
-    topSide.x = position.x; // center of player
-    topSide.y = position.y-ceilingProbeDistance; // top of guy
-    
+    super();    
   }
   
   void checkForFalling() {
@@ -61,9 +52,24 @@ class Chris extends Player {
      * fit between the cracks of those collision points checked.
      */
     
-    // used as probes to detect running into walls, ceiling
-
-    // update wall probes
+    int chrisWidth = chris.width; // think of image size of player standing as the player's physical size
+    int chrisHeight = chris.height;
+    // used as probes to detect running into walls, ceiling, other players
+    PVector leftSideHigh = new PVector();
+    PVector rightSideHigh = new PVector();
+    PVector leftSideLow = new PVector();
+    PVector rightSideLow = new PVector();
+    PVector topSide = new PVector();
+    
+    int wallProbeDistance = int(chrisWidth*0.5);
+    int ceilingProbeDistance = int(chrisHeight);
+    
+    leftSideHigh.x = leftSideLow.x = position.x - wallProbeDistance; // left edge of player
+    rightSideHigh.x = rightSideLow.x = position.x + wallProbeDistance; // right edge of player
+    leftSideLow.y = rightSideLow.y = position.y; // bottom
+    leftSideHigh.y = rightSideHigh.y = position.y-chrisHeight; // top
+    topSide.x = position.x; // center of player
+    topSide.y = position.y-ceilingProbeDistance; // top of guy
 
     
     // the following conditionals just check for collisions with each bump probe
