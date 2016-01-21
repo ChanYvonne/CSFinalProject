@@ -24,21 +24,18 @@ final float GRAVITY_POWER = 0.5; // try making it higher or lower!
 void setup() { // called automatically when the program starts
   size(1000,721); // how large the window/screen is for the level
 
+  StartScreen = true;
+  
   font = loadFont("Avenir-Oblique-20.vlw");
 
   thomas = loadImage("thomas.png");
   chris = loadImage("chris.png");
   cursor = loadImage("cursor.png");
-  StartScreen = true;
-  if (StartScreen){
-    background(32,36,55);
-  }else{
 
   cameraOffsetX = 0.0;
   frameRate(24); // this means draw() will be called 24 times per second
 
   resetLevel(); // sets up player, level level, and timer
-  }
 }
 
 void resetLevel() {
@@ -78,14 +75,10 @@ Boolean levelWonChris() { // checks whether player has gotten to white rectangle
 }
 
 Boolean levelLostThomas(){ // checks whether player has fallen in the cracks aka died
-  PVector bottomOfPlayer;
-  bottomOfPlayer = new PVector(theThomas.position.x, theThomas.position.y-thomas.height);
   return theWorld.deathSquare(theThomas.position); 
 }
 
 Boolean levelLostChris(){ // checks whether player has fallen in the cracks aka died
-  PVector bottomOfPlayer;
-  bottomOfPlayer = new PVector(theChris.position.x, theChris.position.y-chris.height);
   return theWorld.deathSquare(theChris.position); 
 }
 
@@ -111,6 +104,14 @@ void outlinedText(String sayThis, float atX, float atY) {
   text(sayThis, atX, atY);
 }
 
+/*
+void titleText(String title, float atX, float atY){
+  textFont(font);
+  fill(0);
+  text(
+  
+}
+*/
 void updateCameraPosition() {
   int rightEdge = World.GRID_UNITS_WIDE*World.GRID_UNIT_SIZE-width;
   // the left side of the camera view should never go right of the above number
@@ -130,7 +131,15 @@ void updateCameraPosition() {
   }
 }
 
+void mouseClicked(){
+  StartScreen = false;
+}
+
 void draw() { // called automatically, 24 times per second because of setup()'s call to frameRate(24
+  if (StartScreen){
+    background(32,36,55);
+  }else{
+  
   pushMatrix(); // lets us easily undo the upcoming translate call
   translate(-cameraOffsetX, 0.0); // affects all upcoming graphics calls, until popMatrix
 
@@ -182,6 +191,7 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
       textAlign(CENTER);
       outlinedText("You have lost this level!\nPress R to Reset and try again.", width/2, height/2-12);
     }
+  }
   }
 }
 
