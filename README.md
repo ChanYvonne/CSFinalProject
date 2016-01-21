@@ -7,3 +7,8 @@ Pressing "Q" allows the user to switch between characters.
 
 1/19/16
 Yvonne - began creating a title screen and couldn't get characters not to overlap each other :c
+Vandana - still working on character collisions: making the variables used in WallBumping accessible to use for PlayerBumping
+
+1/21/16
+
+Vandana - still working on character collisions: making the variables used in WallBumping accessible to use for PlayerBumping
