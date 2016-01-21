@@ -8,11 +8,7 @@ class Chris extends Player {
   final float TRIVIAL_SPEED = 1.0; // if under this speed, the player is drawn as standing still
   
   Chris() { // constructor, gets called automatically when the Thomas instance is created
-<<<<<<< HEAD
-    super();
-=======
     super();    
->>>>>>> 5947630320c27814d50e4a5ea4d92cdcffb8f844
   }
   
   void checkForFalling() {
@@ -43,8 +39,6 @@ class Chris extends Player {
   */
 
   void checkForWallBumping() {
-<<<<<<< HEAD
-=======
     /* Because of how we draw the player, "position" is the center of the feet/bottom
      * To detect and handle wall/ceiling collisions, we create 5 additional positions:
      * leftSideHigh - left of center, at shoulder/head level
@@ -124,7 +118,6 @@ class Chris extends Player {
   }
   
   void checkForPlayerBumping(){
->>>>>>> 5947630320c27814d50e4a5ea4d92cdcffb8f844
     int chrisWidth = chris.width; // think of image size of player standing as the player's physical size
     int chrisHeight = chris.height;
     int wallProbeDistance = int(chrisWidth*0.3);
@@ -203,6 +196,7 @@ class Chris extends Player {
       }
     }
   }
+    
   
   void inputCheck() {
     // keyboard flags are set by keyPressed/keyReleased in the main .pde

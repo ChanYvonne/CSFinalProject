@@ -7,7 +7,7 @@ class Thomas extends Player {
   final float AIR_SLOWDOWN_PERC = 0.85; // resistance in the air, otherwise air control enables crazy speeds
   final float RUN_ANIMATION_DELAY = 3; // how many game cycles pass between animation updates?
   final float TRIVIAL_SPEED = 1.0; // if under this speed, the player is drawn as standing still
-  
+     
   Thomas() { // constructor, gets called automatically when the Thomas instance is created
     super();
   }
@@ -34,40 +34,6 @@ class Thomas extends Player {
   void checkForWallBumping() {
     int thomasWidth = thomas.width; // think of image size of player standing as the player's physical size
     int thomasHeight = thomas.height;
-<<<<<<< HEAD
-    int wallProbeDistance = int(thomasWidth*0.2);
-    int ceilingProbeDistance = int(thomasHeight*0.95);
-    
-    /* Because of how we draw the player, "position" is the center of the feet/bottom
-     * To detect and handle wall/ceiling collisions, we create 5 additional positions:
-     * leftSideHigh - left of center, at shoulder/head level
-     * leftSideLow - left of center, at shin level
-     * rightSideHigh - right of center, at shoulder/head level
-     * rightSideLow - right of center, at shin level
-     * topSide - horizontal center, at tip of head
-     * These 6 points - 5 plus the original at the bottom/center - are all that we need
-     * to check in order to make sure the player can't move through blocks in the world.
-     * This works because the block sizes (World.GRID_UNIT_SIZE) aren't small enough to
-     * fit between the cracks of those collision points checked.
-     */
-    
-    // used as probes to detect running into walls, ceiling
-    PVector leftSideHigh,rightSideHigh,leftSideLow,rightSideLow,topSide;
-     leftSideHigh = new PVector();
-     rightSideHigh = new PVector();
-     leftSideLow = new PVector();
-     rightSideLow = new PVector();
-     topSide = new PVector();
- 
-     // update wall probes
-     leftSideHigh.x = leftSideLow.x = position.x - wallProbeDistance; // left edge of player
-     rightSideHigh.x = rightSideLow.x = position.x + wallProbeDistance; // right edge of player
-     leftSideLow.y = rightSideLow.y = position.y-0.2*thomasHeight; // shin high
-     leftSideHigh.y = rightSideHigh.y = position.y-0.8*thomasHeight; // shoulder high
- 
-     topSide.x = position.x; // center of player
-     topSide.y = position.y-ceilingProbeDistance; // top of guy
-=======
     // used as probes to detect running into walls, ceiling, other players
     PVector leftSideHigh = new PVector();
     PVector rightSideHigh = new PVector();
@@ -96,7 +62,6 @@ class Thomas extends Player {
      * This works because the block sizes (World.GRID_UNIT_SIZE) aren't small enough to
      * fit between the cracks of those collision points checked.
      */
->>>>>>> 5947630320c27814d50e4a5ea4d92cdcffb8f844
  
     // the following conditionals just check for collisions with each bump probe
     // depending upon which probe has collided, we push the player back the opposite direction
