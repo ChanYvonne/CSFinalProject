@@ -14,6 +14,7 @@ Chris theChris = new Chris();
 Player currentPlayer = theThomas;
 
 PFont font;
+PFont title;
 
 // we use these for keeping track of how long player has played
 int levelStartTimeSec, levelCurrentTimeSec;
@@ -27,6 +28,7 @@ void setup() { // called automatically when the program starts
   StartScreen = true;
   
   font = loadFont("Avenir-Oblique-20.vlw");
+  title = loadFont("CenturyGothic-48.vlw");
 
   thomas = loadImage("thomas.png");
   chris = loadImage("chris.png");
@@ -104,14 +106,13 @@ void outlinedText(String sayThis, float atX, float atY) {
   text(sayThis, atX, atY);
 }
 
-/*
-void titleText(String title, float atX, float atY){
-  textFont(font);
-  fill(0);
-  text(
-  
+
+void titleText(String titlename, float atX, float atY){
+  textFont(title);
+  fill(255);
+  text(titlename, atX-1, atY);  
 }
-*/
+
 void updateCameraPosition() {
   int rightEdge = World.GRID_UNITS_WIDE*World.GRID_UNIT_SIZE-width;
   // the left side of the camera view should never go right of the above number
@@ -138,6 +139,9 @@ void mouseClicked(){
 void draw() { // called automatically, 24 times per second because of setup()'s call to frameRate(24
   if (StartScreen){
     background(32,36,55);
+    titleText("Thomas Was Alone", 275, 250);
+    image(thomas,200,400);
+    image(chris, 200+thomas.width,400 +thomas.height - chris.height);
   }else{
   
   pushMatrix(); // lets us easily undo the upcoming translate call
