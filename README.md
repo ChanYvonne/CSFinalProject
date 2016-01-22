@@ -13,4 +13,5 @@ Vandana - still working on character collisions: making the variables used in Wa
 Yvonne - Continued working on title screen
 
 1/21/16
+Yvonne - Continued working on title screen
 Vandana - still working on character collisions: making the variables used in WallBumping accessible to use for PlayerBumping
