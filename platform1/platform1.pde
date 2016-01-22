@@ -133,15 +133,23 @@ void updateCameraPosition() {
 }
 
 void mouseClicked(){
-  StartScreen = false;
+  if (StartScreen == true){
+    StartScreen = false;
+  }
 }
 
 void draw() { // called automatically, 24 times per second because of setup()'s call to frameRate(24
   if (StartScreen){
     background(32,36,55);
-    titleText("Thomas Was Alone", 275, 250);
+    pushMatrix();
+    rotate(PI/12.0);
+    titleText("Thomas Was Alone", 150, 300);
+    rotate(PI/15.0);
+    titleText("Alone", 170,350);
+    popMatrix();
     image(thomas,200,400);
     image(chris, 200+thomas.width,400 +thomas.height - chris.height);
+    outlinedText("How to play:\nUse arrows to move.\nSpacebar to jump.\nQ to switch characters.", width/2 - 100, height-120);
   }else{
   
   pushMatrix(); // lets us easily undo the upcoming translate call
@@ -169,10 +177,6 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
   
   popMatrix(); // undoes the translate function from earlier in draw()
 
-  if (focused == false) { // does the window currently not have keyboard focus?
-    textAlign(CENTER);
-    outlinedText("Click this area to play.\n\nUse arrows to move.\nSpacebar to jump.\nQ to switch characters.", width/2, height-120);
-  } else {
     textAlign(RIGHT);
     if (levelWonThomas() == false && levelWonChris() == false &&
         (levelLostThomas() == false || levelLostChris() == false)) { // stop updating timer after player finishes
@@ -195,7 +199,6 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
       textAlign(CENTER);
       outlinedText("You have lost this level!\nPress R to Reset and try again.", width/2, height/2-12);
     }
-  }
   }
 }
 
