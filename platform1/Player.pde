@@ -1,3 +1,4 @@
+
 abstract class Player {
   PVector position,velocity; // PVector contains two floats, x and y
   Boolean isOnGround; // used to keep track of whether the player is on the ground. useful for control and animation.
