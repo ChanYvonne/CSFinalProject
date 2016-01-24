@@ -2,7 +2,6 @@
 PImage thomas;
 PImage chris;
 PImage cursor;
-Boolean StartScreen;
 
 // we use this to track how far the camera has scrolled left or right
 float cameraOffsetX;
@@ -14,7 +13,6 @@ Chris theChris = new Chris();
 Player currentPlayer = theThomas;
 
 PFont font;
-PFont title;
 
 // we use these for keeping track of how long player has played
 int levelStartTimeSec, levelCurrentTimeSec;
@@ -25,14 +23,13 @@ final float GRAVITY_POWER = 0.5; // try making it higher or lower!
 void setup() { // called automatically when the program starts
   size(1000,721); // how large the window/screen is for the level
 
-  StartScreen = true;
-  
   font = loadFont("Avenir-Oblique-20.vlw");
-  title = loadFont("CenturyGothic-48.vlw");
 
   thomas = loadImage("thomas.png");
   chris = loadImage("chris.png");
   cursor = loadImage("cursor.png");
+  
+  
 
   cameraOffsetX = 0.0;
   frameRate(24); // this means draw() will be called 24 times per second
@@ -77,10 +74,14 @@ Boolean levelWonChris() { // checks whether player has gotten to white rectangle
 }
 
 Boolean levelLostThomas(){ // checks whether player has fallen in the cracks aka died
+  PVector bottomOfPlayer;
+  bottomOfPlayer = new PVector(theThomas.position.x, theThomas.position.y-thomas.height);
   return theWorld.deathSquare(theThomas.position); 
 }
 
 Boolean levelLostChris(){ // checks whether player has fallen in the cracks aka died
+  PVector bottomOfPlayer;
+  bottomOfPlayer = new PVector(theChris.position.x, theChris.position.y-chris.height);
   return theWorld.deathSquare(theChris.position); 
 }
 
@@ -106,13 +107,6 @@ void outlinedText(String sayThis, float atX, float atY) {
   text(sayThis, atX, atY);
 }
 
-
-void titleText(String titlename, float atX, float atY){
-  textFont(title);
-  fill(255);
-  text(titlename, atX-1, atY);  
-}
-
 void updateCameraPosition() {
   int rightEdge = World.GRID_UNITS_WIDE*World.GRID_UNIT_SIZE-width;
   // the left side of the camera view should never go right of the above number
@@ -132,26 +126,7 @@ void updateCameraPosition() {
   }
 }
 
-void mouseClicked(){
-  if (StartScreen == true){
-    StartScreen = false;
-  }
-}
-
-void draw() { // called automatically, 24 times per second because of setup()'s call to frameRate(24
-  if (StartScreen){
-    background(32,36,55);
-    pushMatrix();
-    rotate(PI/12.0);
-    titleText("Thomas Was Alone", 150, 300);
-    rotate(PI/15.0);
-    titleText("Alone", 170,350);
-    popMatrix();
-    image(thomas,200,400);
-    image(chris, 200+thomas.width,400 +thomas.height - chris.height);
-    outlinedText("How to play:\nUse arrows to move.\nSpacebar to jump.\nQ to switch characters.", width/2 - 100, height-120);
-  }else{
-  
+void draw() { // called automatically, 24 times per second because of setup()'s call to frameRate(24)
   pushMatrix(); // lets us easily undo the upcoming translate call
   translate(-cameraOffsetX, 0.0); // affects all upcoming graphics calls, until popMatrix
 
@@ -177,6 +152,10 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
   
   popMatrix(); // undoes the translate function from earlier in draw()
 
+  if (focused == false) { // does the window currently not have keyboard focus?
+    textAlign(CENTER);
+    outlinedText("Click this area to play.\n\nUse arrows to move.\nSpacebar to jump.\nQ to switch characters.", width/2, height-120);
+  } else {
     textAlign(RIGHT);
     if (levelWonThomas() == false && levelWonChris() == false &&
         (levelLostThomas() == false || levelLostChris() == false)) { // stop updating timer after player finishes
