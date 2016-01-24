@@ -11,7 +11,12 @@ Vandana - still working on character collisions: making the variables used in Wa
 
 1/20/16
 Yvonne - Continued working on title screen
+       - Encountered a problem with players, they can't move left/right!
 
 1/21/16
 Yvonne - Continued working on title screen
+       - Can't fix the bug with characters :(
 Vandana - still working on character collisions: making the variables used in WallBumping accessible to use for PlayerBumping
+ 
+1/22/16
+Yvonne - Continued looking for the problem with character movement
