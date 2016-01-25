@@ -24,3 +24,6 @@ Vandana - also looking for the problem: why can't characters move laterally?
 
 1/24/16
 Vandana - solved problem with character movement, continuing to work on character collisions
+Yvonne & Vandana - Worked on character collisions - why is this so much harder than it seems?!?!?!
+
+1/25/16
