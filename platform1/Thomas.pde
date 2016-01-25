@@ -34,8 +34,7 @@ class Thomas extends Player {
   void checkForWallBumping() {
     int thomasWidth = thomas.width; // think of image size of player standing as the player's physical size
     int thomasHeight = thomas.height;
-    int wallProbeDistance = int(thomasWidth*0.2);
-    int ceilingProbeDistance = int(thomasHeight*0.95);
+    int wallProbeDistance = int(thomasWidth*0.25);
     
     /* Because of how we draw the player, "position" is the center of the feet/bottom
      * To detect and handle wall/ceiling collisions, we create 5 additional positions:
@@ -65,7 +64,7 @@ class Thomas extends Player {
      leftSideHigh.y = rightSideHigh.y = position.y-0.8*thomasHeight; // shoulder high
  
      topSide.x = position.x; // center of player
-     topSide.y = position.y-ceilingProbeDistance; // top of guy
+     topSide.y = position.y-thomasHeight; // top of guy
  
     // the following conditionals just check for collisions with each bump probe
     // depending upon which probe has collided, we push the player back the opposite direction
@@ -77,7 +76,7 @@ class Thomas extends Player {
         velocity.x=0.0;
         velocity.y=0.0;
       } else {
-        position.y = theWorld.bottomOfSquare(topSide)+ceilingProbeDistance;
+        position.y = theWorld.bottomOfSquare(topSide)+thomasHeight;
         if(velocity.y < 0) {
           velocity.y = 0.0;
         }

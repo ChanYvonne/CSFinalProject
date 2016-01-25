@@ -41,8 +41,7 @@ class Chris extends Player {
   void checkForWallBumping() {
     int chrisWidth = chris.width; // think of image size of player standing as the player's physical size
     int chrisHeight = chris.height;
-    int wallProbeDistance = int(chrisWidth*0.3);
-    int ceilingProbeDistance = int(chrisHeight*0.95);
+    int wallProbeDistance = int(chrisWidth*0.5);
     
     /* Because of how we draw the player, "position" is the center of the feet/bottom
      * To detect and handle wall/ceiling collisions, we create 5 additional positions:
@@ -71,7 +70,7 @@ class Chris extends Player {
     leftSideHigh.y = rightSideHigh.y = position.y-0.8*chrisHeight; // shoulder high
 
     topSide.x = position.x; // center of player
-    topSide.y = position.y-ceilingProbeDistance; // top of guy
+    topSide.y = position.y-chrisHeight; // top of guy
     
     // the following conditionals just check for collisions with each bump probe
     // depending upon which probe has collided, we push the player back the opposite direction
@@ -82,7 +81,7 @@ class Chris extends Player {
         velocity.x=0.0;
         velocity.y=0.0;
       } else {
-        position.y = theWorld.bottomOfSquare(topSide)+ceilingProbeDistance;
+        position.y = theWorld.bottomOfSquare(topSide)+chrisHeight;
         if(velocity.y < 0) {
           velocity.y = 0.0;
         }
@@ -117,6 +116,24 @@ class Chris extends Player {
       }
     }
   }
+  /*
+  void checkForPlayerBumping(Player p2){
+    int chrisWidth = chris.width; // think of image size of player standing as the player's physical size
+    int chrisHeight = chris.height;
+    int wallProbeDistance = int(chrisWidth*0.5);
+    PVector leftSideHigh = new PVector();
+    PVector rightSideHigh = new PVector();
+    PVector leftSideLow = new PVector();
+    PVector rightSideLow = new PVector();
+    PVector topSide = new PVector();\
+    leftSideHigh.x = leftSideLow.x = position.x - wallProbeDistance; // left edge of player
+    rightSideHigh.x = rightSideLow.x = position.x + wallProbeDistance; // right edge of player
+    leftSideLow.y = rightSideLow.y = position.y-0.2*chrisHeight; // shin high
+    leftSideHigh.y = rightSideHigh.y = position.y-0.8*chrisHeight; // shoulder high
+    topSide.x = position.x; // center of player
+    topSide.y = position.y-chrisHeight; // top of guy
+  }
+  */
   
   void inputCheck() {
     // keyboard flags are set by keyPressed/keyReleased in the main .pde

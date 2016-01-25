@@ -33,12 +33,42 @@ abstract class Player {
     velocity.x = 0;
     velocity.y = 0;
   }
+  
+  void resetVelocityX(){
+    velocity.x = 0;
+  }
+  
+  void resetVelocityY(){
+    velocity.y = 0;
+  }
+  
+  float getVelocityX(){
+    return velocity.x;
+  }
+  
+  float getVelocityY(){
+    return velocity.y;
+  }
+  
+  PVector getVelocity(){
+    return velocity;
+  }
+  
+  void setPosX(float num){
+    position.x = num;
+  }
+  
+  void setPosY(float num){
+    position.y = num;
+  }
     
   abstract void inputCheck();
   
   abstract void checkForWallBumping();
 
   abstract void checkForFalling();
+  
+  //abstract void checkForPlayerBumping(Player p2);
 
   void move() {
     position.add(velocity);
