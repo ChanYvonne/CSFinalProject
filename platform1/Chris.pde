@@ -66,8 +66,8 @@ class Chris extends Player {
     // update wall probes
     leftSideHigh.x = leftSideLow.x = position.x - wallProbeDistance; // left edge of player
     rightSideHigh.x = rightSideLow.x = position.x + wallProbeDistance; // right edge of player
-    leftSideLow.y = rightSideLow.y = position.y-0.2*chrisHeight; // shin high
-    leftSideHigh.y = rightSideHigh.y = position.y-0.8*chrisHeight; // shoulder high
+    leftSideLow.y = rightSideLow.y = position.y-0.5*chrisHeight; // shin high
+    leftSideHigh.y = rightSideHigh.y = position.y-0.95*chrisHeight; // shoulder high
 
     topSide.x = position.x; // center of player
     topSide.y = position.y-chrisHeight; // top of guy
