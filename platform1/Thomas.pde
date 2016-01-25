@@ -34,7 +34,7 @@ class Thomas extends Player {
   void checkForWallBumping() {
     int thomasWidth = thomas.width; // think of image size of player standing as the player's physical size
     int thomasHeight = thomas.height;
-    int wallProbeDistance = int(thomasWidth*0.25);
+    int wallProbeDistance = int(thomasWidth*0.5);
     
     /* Because of how we draw the player, "position" is the center of the feet/bottom
      * To detect and handle wall/ceiling collisions, we create 5 additional positions:

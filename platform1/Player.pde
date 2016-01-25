@@ -68,7 +68,97 @@ abstract class Player {
 
   abstract void checkForFalling();
   
-  //abstract void checkForPlayerBumping(Player p2);
+  void checkForPlayerBumping(){
+  
+    int chrisWidth = chris.width; // think of image size of player standing as the player's physical size
+    int chrisHeight = chris.height;
+    int chriswallProbeDistance = int(chrisWidth*0.5);
+    PVector chrisleftSideHigh = new PVector();
+    PVector chrisrightSideHigh = new PVector();
+    PVector chrisleftSideLow = new PVector();
+    PVector chrisrightSideLow = new PVector();
+    PVector christopSide = new PVector();
+  
+    // update wall probes
+    chrisleftSideHigh.x = chrisleftSideLow.x = theChris.getPosX() - chriswallProbeDistance; // left edge of player
+    chrisrightSideHigh.x = chrisrightSideLow.x = theChris.getPosX() + chriswallProbeDistance; // right edge of player
+    chrisleftSideLow.y = chrisrightSideLow.y = theChris.getPosY(); // shin high
+    chrisleftSideHigh.y = chrisrightSideHigh.y = theChris.getPosY()-chrisHeight; // shoulder high
+  
+    christopSide.x = theChris.getPosX(); // center of player
+    christopSide.y = theChris.getPosY()-chrisHeight; // top of guy
+    
+    int thomasWidth = thomas.width; // think of image size of player standing as the player's physical size
+    int thomasHeight = thomas.height;
+    int thomaswallProbeDistance = int(thomasWidth*0.5);
+    PVector thomasleftSideHigh = new PVector();
+    PVector thomasrightSideHigh = new PVector();
+    PVector thomasleftSideLow = new PVector();
+    PVector thomasrightSideLow = new PVector();
+    PVector thomastopSide = new PVector();
+  
+    // update wall probes
+    thomasleftSideHigh.x = thomasleftSideLow.x = theThomas.getPosX() - thomaswallProbeDistance; // left edge of player
+    thomasrightSideHigh.x = thomasrightSideLow.x = theThomas.getPosX() + thomaswallProbeDistance; // right edge of player
+    thomasleftSideLow.y = thomasrightSideLow.y = theThomas.getPosY(); // shin high
+    thomasleftSideHigh.y = thomasrightSideHigh.y = theThomas.getPosY()-thomasHeight; // shoulder high
+  
+    thomastopSide.x = theThomas.getPosX(); // center of player
+    thomastopSide.y = theThomas.getPosY()-thomasHeight; // top of guy
+    
+    // the following conditionals just check for collisions with each bump probe
+    // depending upon which probe has collided, we push the player back the opposite direction
+    
+    //left side low
+    if(chrisleftSideLow.x <= thomasrightSideLow.x && chrisleftSideLow.y >= thomastopSide.y
+    && chrisrightSideLow.x >= thomasleftSideLow.x && chrisleftSideHigh.y <= theThomas.getPosY()) {
+      //theChris.setPosX(thomasrightSideHigh.x+chriswallProbeDistance);
+      if(theChris.getVelocityX() < 0) {
+        theChris.setPosX(theChris.getPosX() - theChris.getVelocityX());
+        theChris.setPosY(theChris.getPosY() - theChris.getVelocityY());
+        theChris.resetVelocityX();
+        theChris.resetVelocityY();
+      }
+      theChris.isOnGround = true;
+    }
+   
+   // left side high
+    if(chrisleftSideHigh.x <= thomasrightSideLow.x && chrisleftSideHigh.y <= theThomas.getPosY()
+    && chrisrightSideLow.x >= thomasleftSideLow.x && chrisleftSideHigh.y >= theThomas.getPosY()) {
+      //theChris.setPosX(thomasrightSideHigh.x+chriswallProbeDistance);
+      if(theThomas.getVelocityX() < 0) {
+        theThomas.setPosX(theThomas.getPosX() - theThomas.getVelocityX());
+        theThomas.setPosY(theThomas.getPosY() - theThomas.getVelocityY());
+        theThomas.resetVelocityX();
+        theThomas.resetVelocityY();
+      }
+    }
+   
+   // right side low
+    if(chrisrightSideLow.x >= thomasleftSideLow.x && chrisrightSideLow.y >= thomastopSide.y
+    && chrisleftSideHigh.x <= thomasrightSideLow.x && chrisleftSideHigh.y <= theThomas.getPosY()) {
+      //theChris.setPosX(thomasleftSideHigh.x-chriswallProbeDistance);
+      if(theChris.getVelocityX() > 0) {
+        theChris.setPosX(theChris.getPosX() - theChris.getVelocityX());
+        theChris.setPosY(theChris.getPosY() - theChris.getVelocityY());
+        theChris.resetVelocityX();
+        theChris.resetVelocityY();
+      }
+      theChris.isOnGround = true;
+    }
+   
+   // right side high
+    if(chrisrightSideHigh.x >= thomasleftSideLow.x && chrisrightSideHigh.y <= theThomas.getPosY()
+    && chrisleftSideLow.x <= thomasrightSideLow.x && chrisleftSideLow.y >= thomastopSide.y) {
+      //theChris.setPosX(thomasleftSideHigh.x-chriswallProbeDistance);
+      if(theThomas.getVelocityX() > 0) {
+        theThomas.setPosX(theThomas.getPosX() - theThomas.getVelocityX());
+        theThomas.setPosY(theThomas.getPosY() - theThomas.getVelocityY());
+        theThomas.resetVelocityX();
+        theThomas.resetVelocityY();
+      }
+    }
+  }
 
   void move() {
     position.add(velocity);
@@ -76,34 +166,9 @@ abstract class Player {
     checkForWallBumping();
     
     checkForFalling();
-  }
-  
-  /*
-  void checkForPlayerBumping(){ //so that the players won't trample each other
-    int thomasWidth = thomas.width; // think of image size of player standing as the player's physical size
-    int thomasHeight = thomas.height;
-    int wallProbeDistance = int(thomasWidth*0.2);
-    int ceilingProbeDistance = int(thomasHeight*0.95);
     
-    // used as probes to detect running into walls, ceiling
-    PVector leftSideHigh,rightSideHigh,leftSideLow,rightSideLow,topSide;
-     leftSideHigh = new PVector();
-     rightSideHigh = new PVector();
-     leftSideLow = new PVector();
-     rightSideLow = new PVector();
-     topSide = new PVector();
- 
-     // update wall probes
-     leftSideHigh.x = leftSideLow.x = position.x - wallProbeDistance; // left edge of player
-     rightSideHigh.x = rightSideLow.x = position.x + wallProbeDistance; // right edge of player
-     leftSideLow.y = rightSideLow.y = position.y-0.2*thomasHeight; // shin high
-     leftSideHigh.y = rightSideHigh.y = position.y-0.8*thomasHeight; // shoulder high
- 
-     topSide.x = position.x; // center of player
-     topSide.y = position.y-ceilingProbeDistance; // top of guy
+    checkForPlayerBumping();
   }
-  */
-
   
   abstract void draw();
 }

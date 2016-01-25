@@ -85,126 +85,6 @@ Boolean levelLostChris(){ // checks whether player has fallen in the cracks aka 
   return theWorld.deathSquare(theChris.position); 
 }
 
-void checkForPlayerBumping(){
-  
-  int chrisWidth = chris.width; // think of image size of player standing as the player's physical size
-  int chrisHeight = chris.height;
-  int chriswallProbeDistance = int(chrisWidth*0.5);
-  PVector chrisleftSideHigh = new PVector();
-  PVector chrisrightSideHigh = new PVector();
-  PVector chrisleftSideLow = new PVector();
-  PVector chrisrightSideLow = new PVector();
-  PVector christopSide = new PVector();
-
-  // update wall probes
-  chrisleftSideHigh.x = chrisleftSideLow.x = theChris.getPosX() - chriswallProbeDistance; // left edge of player
-  chrisrightSideHigh.x = chrisrightSideLow.x = theChris.getPosX() + chriswallProbeDistance; // right edge of player
-  chrisleftSideLow.y = chrisrightSideLow.y = theChris.getPosY(); // shin high
-  chrisleftSideHigh.y = chrisrightSideHigh.y = theChris.getPosY()-chrisHeight; // shoulder high
-
-  christopSide.x = theChris.getPosX(); // center of player
-  christopSide.y = theChris.getPosY()-chrisHeight; // top of guy
-  
-  int thomasWidth = thomas.width; // think of image size of player standing as the player's physical size
-  int thomasHeight = thomas.height;
-  int thomaswallProbeDistance = int(thomasWidth*0.5);
-  PVector thomasleftSideHigh = new PVector();
-  PVector thomasrightSideHigh = new PVector();
-  PVector thomasleftSideLow = new PVector();
-  PVector thomasrightSideLow = new PVector();
-  PVector thomastopSide = new PVector();
-
-  // update wall probes
-  thomasleftSideHigh.x = thomasleftSideLow.x = theThomas.getPosX() - thomaswallProbeDistance; // left edge of player
-  thomasrightSideHigh.x = thomasrightSideLow.x = theThomas.getPosX() + thomaswallProbeDistance; // right edge of player
-  thomasleftSideLow.y = thomasrightSideLow.y = theThomas.getPosY(); // shin high
-  thomasleftSideHigh.y = thomasrightSideHigh.y = theThomas.getPosY()-thomasHeight; // shoulder high
-
-  thomastopSide.x = theThomas.getPosX(); // center of player
-  thomastopSide.y = theThomas.getPosY()-thomasHeight; // top of guy
-  
-  // the following conditionals just check for collisions with each bump probe
-  // depending upon which probe has collided, we push the player back the opposite direction
-  /*
-  //topside
-  if(christopSide.y <= theThomas.getPosY()) {
-    if(theChris.getPosY() <= theThomas.getPosY()){
-      theChris.setPosX(theChris.getPosX() - theChris.getVelocityX());
-      theChris.setPosY(theChris.getPosY() - theChris.getVelocityY());
-      theChris.resetVelocityX();
-      theChris.resetVelocityY();
-    } else {
-      theChris.setPosY(theThomas.getPosY() + chrisHeight);
-      if(theChris.getVelocityY() < 0){
-        theChris.resetVelocityY();
-      }
-    }
-  }
-  */
-  
-  //left side low
-  if(chrisleftSideLow.x <= thomasrightSideLow.x && chrisleftSideLow.y >= thomastopSide.y
-  && chrisrightSideLow.x >= thomasleftSideLow.x && chrisleftSideHigh.y <= theThomas.getPosY()) {
-    //theChris.setPosX(thomasrightSideHigh.x+chriswallProbeDistance);
-    if(theChris.getVelocityX() < 0) {
-      theChris.setPosX(theChris.getPosX() - theChris.getVelocityX());
-      theChris.setPosY(theChris.getPosY() - theChris.getVelocityY());
-      theChris.resetVelocityX();
-      theChris.resetVelocityY();
-    }
-    theChris.isOnGround = true;
-  }
- 
- // left side high
-  if(chrisleftSideHigh.x <= thomasrightSideLow.x && chrisleftSideHigh.y <= theThomas.getPosY()
-  && chrisrightSideLow.x >= thomasleftSideLow.x && chrisleftSideHigh.y >= theThomas.getPosY()) {
-    //theChris.setPosX(thomasrightSideHigh.x+chriswallProbeDistance);
-    if(theThomas.getVelocityX() < 0) {
-      theThomas.setPosX(theThomas.getPosX() - theThomas.getVelocityX());
-      theThomas.setPosY(theThomas.getPosY() - theThomas.getVelocityY());
-      theThomas.resetVelocityX();
-      theThomas.resetVelocityY();
-    }
-  }
- 
- // right side low
-  if(chrisrightSideLow.x >= thomasleftSideLow.x && chrisrightSideLow.y >= thomastopSide.y
-  && chrisleftSideHigh.x <= thomasrightSideLow.x && chrisleftSideHigh.y <= theThomas.getPosY()) {
-    //theChris.setPosX(thomasleftSideHigh.x-chriswallProbeDistance);
-    if(theChris.getVelocityX() > 0) {
-      theChris.setPosX(theChris.getPosX() - theChris.getVelocityX());
-      theChris.setPosY(theChris.getPosY() - theChris.getVelocityY());
-      theChris.resetVelocityX();
-      theChris.resetVelocityY();
-    }
-    theChris.isOnGround = true;
-  }
- 
- // right side high
-  if(chrisrightSideHigh.x >= thomasleftSideLow.x && chrisrightSideHigh.y <= theThomas.getPosY()
-  && chrisleftSideLow.x <= thomasrightSideLow.x && chrisleftSideLow.y >= thomastopSide.y) {
-    //theChris.setPosX(thomasleftSideHigh.x-chriswallProbeDistance);
-    if(theThomas.getVelocityX() > 0) {
-      theThomas.setPosX(theThomas.getPosX() - theThomas.getVelocityX());
-      theThomas.setPosY(theThomas.getPosY() - theThomas.getVelocityY());
-      theThomas.resetVelocityX();
-      theThomas.resetVelocityY();
-    }
-  }
-  
-  /*
-  if(((theChris.getPosY() > theThomas.getPosY() - thomas.height && theThomas.getPosY() > theChris.getPosY()) ||
-  (theThomas.getPosY() > theChris.getPosY() - chris.height && theChris.getPosY() > theThomas.getPosY())) &&
-  (abs(theChris.getPosX() - theThomas.getPosX()) < 0.5*(thomas.width + chris.width))){
-    theChris.setPosX(theChris.getPosX() - theChris.getVelocityX());
-    theChris.setPosY(theChris.getPosY() - theChris.getVelocityY());
-    theChris.resetVelocity();
-    theChris.isOnGround = true;
-  }
-  */
-  
-}
-
 void outlinedText(String sayThis, float atX, float atY) {
   textFont(font); // use the font we loaded
   fill(0); // white for the upcoming text, drawn in each direction to make outline
@@ -247,14 +127,12 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
     if (currentPlayer == theThomas){
       image(cursor, theThomas.position.x- 0.3*thomas.width, theThomas.position.y - 1.4*thomas.height);
       theThomas.inputCheck();
-      checkForPlayerBumping();
       theThomas.move();
       
     }
     if (currentPlayer == theChris){
       image(cursor, theChris.position.x-0.3*chris.width, theChris.position.y - 1.5*chris.height);
       theChris.inputCheck();
-      checkForPlayerBumping();
       theChris.move();
     }
     theThomas.draw();
