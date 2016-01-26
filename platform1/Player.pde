@@ -1,6 +1,5 @@
 abstract class Player {
   PVector position,velocity; // PVector contains two floats, x and y
-
   Boolean isOnGround; // used to keep track of whether the player is on the ground. useful for control and animation.
   Boolean facingRight; // used to keep track of which direction the player last moved in. used to flip player image.
   int animDelay; // countdown timer between animation updates
@@ -110,64 +109,67 @@ abstract class Player {
     // depending upon which probe has collided, we push the player back the opposite direction
     
     //left side low
-    if(chrisleftSideLow.x <= thomasrightSideLow.x && chrisleftSideLow.y >= thomastopSide.y
-    && chrisrightSideLow.x >= thomasleftSideLow.x && chrisleftSideHigh.y <= theThomas.getPosY()) {
+    if(theChris.getVelocityX() < 0) {
+      if(chrisleftSideLow.x <= thomasrightSideLow.x && chrisleftSideLow.y >= thomastopSide.y
+      && chrisrightSideLow.x >= thomasleftSideLow.x && chrisleftSideHigh.y <= theThomas.getPosY()) {
       //theChris.setPosX(thomasrightSideHigh.x+chriswallProbeDistance);
-      if(theChris.getVelocityX() < 0) {
         theChris.setPosX(theChris.getPosX() - theChris.getVelocityX());
         theChris.setPosY(theChris.getPosY() - theChris.getVelocityY());
         theChris.resetVelocityX();
         theChris.resetVelocityY();
+        theChris.isOnGround = true;
+      } else{
+        theChris.checkForFalling();
       }
-      theChris.isOnGround = true;
     }
    
    // left side high
-    if(chrisleftSideHigh.x <= thomasrightSideLow.x && chrisleftSideHigh.y <= theThomas.getPosY()
-    && chrisrightSideLow.x >= thomasleftSideLow.x && chrisleftSideHigh.y >= theThomas.getPosY()) {
-      //theChris.setPosX(thomasrightSideHigh.x+chriswallProbeDistance);
-      if(theThomas.getVelocityX() < 0) {
+    if(theThomas.getVelocityX() < 0) {
+      if(chrisleftSideHigh.x <= thomasrightSideLow.x && chrisleftSideHigh.y <= theThomas.getPosY()
+      && chrisrightSideLow.x >= thomasleftSideLow.x && chrisleftSideHigh.y >= theThomas.getPosY()) {
         theThomas.setPosX(theThomas.getPosX() - theThomas.getVelocityX());
         theThomas.setPosY(theThomas.getPosY() - theThomas.getVelocityY());
         theThomas.resetVelocityX();
         theThomas.resetVelocityY();
+        theThomas.isOnGround = true;
+      } else{
+        theThomas.checkForFalling();
       }
     }
    
    // right side low
-    if(chrisrightSideLow.x >= thomasleftSideLow.x && chrisrightSideLow.y >= thomastopSide.y
-    && chrisleftSideHigh.x <= thomasrightSideLow.x && chrisleftSideHigh.y <= theThomas.getPosY()) {
-      //theChris.setPosX(thomasleftSideHigh.x-chriswallProbeDistance);
-      if(theChris.getVelocityX() > 0) {
+    if(theChris.getVelocityX() > 0) {
+      if(chrisrightSideLow.x >= thomasleftSideLow.x && chrisrightSideLow.y >= thomastopSide.y
+      && chrisleftSideHigh.x <= thomasrightSideLow.x && chrisleftSideHigh.y <= theThomas.getPosY()) {      
         theChris.setPosX(theChris.getPosX() - theChris.getVelocityX());
         theChris.setPosY(theChris.getPosY() - theChris.getVelocityY());
         theChris.resetVelocityX();
         theChris.resetVelocityY();
+        theChris.isOnGround = true;
+      } else{
+        theChris.checkForFalling();
       }
-      theChris.isOnGround = true;
     }
    
    // right side high
-    if(chrisrightSideHigh.x >= thomasleftSideLow.x && chrisrightSideHigh.y <= theThomas.getPosY()
-    && chrisleftSideLow.x <= thomasrightSideLow.x && chrisleftSideLow.y >= thomastopSide.y) {
-      //theChris.setPosX(thomasleftSideHigh.x-chriswallProbeDistance);
-      if(theThomas.getVelocityX() > 0) {
+    if(theThomas.getVelocityX() > 0) {
+      if(chrisrightSideHigh.x >= thomasleftSideLow.x && chrisrightSideHigh.y <= theThomas.getPosY()
+      && chrisleftSideLow.x <= thomasrightSideLow.x && chrisleftSideLow.y >= thomastopSide.y) {
         theThomas.setPosX(theThomas.getPosX() - theThomas.getVelocityX());
         theThomas.setPosY(theThomas.getPosY() - theThomas.getVelocityY());
         theThomas.resetVelocityX();
         theThomas.resetVelocityY();
+        theThomas.isOnGround = true;
+      } else {
+        theThomas.checkForFalling();
       }
     }
   }
 
   void move() {
     position.add(velocity);
-    
-    checkForWallBumping();
-    
-    checkForFalling();
-    
     checkForPlayerBumping();
+    checkForWallBumping();
   }
   
   abstract void draw();
