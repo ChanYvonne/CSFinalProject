@@ -48,17 +48,18 @@ void setup() { // called automatically when the program starts
 void resetLevel() {
   // multiple levels could be supported by copying in a different start grid
   
-  if (currentLevel == LevelTwo && levelWonThomas() && levelWonChris()){
-      currentLevel = LevelOne;
-  }
-  
   theThomas.reset(); // reset everything about the player
-  
+    
   if (currentLevel == LevelOne){
     LevelOne.reload(); // reset world map
   }else {
-    theChris.reset();
-    LevelTwo.reload();
+    if (currentLevel == LevelTwo && levelWonThomas() && levelWonChris()){
+      currentLevel = LevelOne;
+      theThomas.reset();
+    }else{
+      theChris.reset();
+      LevelTwo.reload();
+    }
   }
   
   // reset timer in corner
@@ -201,6 +202,14 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
   
   popMatrix(); // undoes the translate function from earlier in draw()
   
+  if (currentLevel == LevelOne){
+    textAlign(CENTER,TOP);
+    outlinedText("Thomas was Alone. Wow. What a weird first thought to have.\nThomas knew of four things:\nthe whole 'alone' thing, portals,\nhis fantastic falling abilities, joyful jumping skills.", width/2, 10);
+  }
+  if (currentLevel == LevelTwo){
+    textAlign(CENTER,TOP);
+    outlinedText("But then Thomas met Chris.\nChris was quite fond of Thomas since he helped him reach new heights.\nThomas had made a new friend.\nHe was not alone anymore.", width/2, 10);
+  }
   /*
   if (focused == false) { // does the window currently not have keyboard focus?
     textAlign(CENTER);
