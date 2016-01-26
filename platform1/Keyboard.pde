@@ -17,6 +17,10 @@ class Keyboard {
       resetLevel(); // then R key resets it
     }
     
+    if (key == 'n' || key == 'N') {
+      nextLevel(); //same conditions as r above
+    }
+    
     if (key == 'q' || key == 'Q'){
       switchPlayer(); //same conditions as r above
     }

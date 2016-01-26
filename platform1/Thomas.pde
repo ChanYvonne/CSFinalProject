@@ -14,16 +14,16 @@ class Thomas extends Player {
   
   void checkForFalling() {
     // If we're standing on an empty tile or end tile, we're not standing on anything. Fall!
-    if(theWorld.worldSquareAt(position)==World.TILE_EMPTY ||
-       //theWorld.worldSquareAt(position)==World.TILE_START_THOMAS||
-       theWorld.worldSquareAt(position)==World.TILE_END_THOMAS){
+    if(currentLevel.worldSquareAt(position)==World.TILE_EMPTY ||
+       //currentLevel.worldSquareAt(position)==World.TILE_START_THOMAS||
+       currentLevel.worldSquareAt(position)==WorldTwo.TILE_END_THOMAS){
        isOnGround=false;
     }
     
     if(isOnGround==false) { // not on ground?    
-      if(theWorld.worldSquareAt(position)== World.TILE_SOLID) { // landed on solid square?
+      if(currentLevel.worldSquareAt(position)== World.TILE_SOLID) { // landed on solid square?
         isOnGround = true;
-        position.y = theWorld.topOfSquare(position);
+        position.y = currentLevel.topOfSquare(position);
         velocity.y = 0.0;
       } else { // fall
         velocity.y += GRAVITY_POWER;
@@ -70,42 +70,42 @@ class Thomas extends Player {
     // depending upon which probe has collided, we push the player back the opposite direction
     
   
-    if( theWorld.worldSquareAt(topSide)==World.TILE_SOLID) {
-      if(theWorld.worldSquareAt(position)==World.TILE_SOLID) {
+    if( currentLevel.worldSquareAt(topSide)==World.TILE_SOLID) {
+      if(currentLevel.worldSquareAt(position)==World.TILE_SOLID) {
         position.sub(velocity);
         velocity.x=0.0;
         velocity.y=0.0;
       } else {
-        position.y = theWorld.bottomOfSquare(topSide)+thomasHeight;
+        position.y = currentLevel.bottomOfSquare(topSide)+thomasHeight;
         if(velocity.y < 0) {
           velocity.y = 0.0;
         }
       }
     }
     
-    if( theWorld.worldSquareAt(leftSideLow)==World.TILE_SOLID) {
-      position.x = theWorld.rightOfSquare(leftSideLow)+wallProbeDistance;
+    if( currentLevel.worldSquareAt(leftSideLow)==World.TILE_SOLID) {
+      position.x = currentLevel.rightOfSquare(leftSideLow)+wallProbeDistance;
       if(velocity.x < 0) {
         velocity.x = 0.0;
       }
     }
    
-    if( theWorld.worldSquareAt(leftSideHigh)==World.TILE_SOLID) {
-      position.x = theWorld.rightOfSquare(leftSideHigh)+wallProbeDistance;
+    if( currentLevel.worldSquareAt(leftSideHigh)==World.TILE_SOLID) {
+      position.x = currentLevel.rightOfSquare(leftSideHigh)+wallProbeDistance;
       if(velocity.x < 0) {
         velocity.x = 0.0;
       }
     }
    
-    if( theWorld.worldSquareAt(rightSideLow)==World.TILE_SOLID) {
-      position.x = theWorld.leftOfSquare(rightSideLow)-wallProbeDistance;
+    if( currentLevel.worldSquareAt(rightSideLow)==World.TILE_SOLID) {
+      position.x = currentLevel.leftOfSquare(rightSideLow)-wallProbeDistance;
       if(velocity.x > 0) {
         velocity.x = 0.0;
       }
     }
    
-    if( theWorld.worldSquareAt(rightSideHigh)==World.TILE_SOLID) {
-      position.x = theWorld.leftOfSquare(rightSideHigh)-wallProbeDistance;
+    if( currentLevel.worldSquareAt(rightSideHigh)==World.TILE_SOLID) {
+      position.x = currentLevel.leftOfSquare(rightSideHigh)-wallProbeDistance;
       if(velocity.x > 0) {
         velocity.x = 0.0;
       }
@@ -114,37 +114,37 @@ class Thomas extends Player {
   
   /* modified version when it kept returning nullPointerException
   
-  if( theWorld.worldSquareAt(leftSideLow)==World.TILE_SOLID ||
-        (theWorld.worldSpotX(leftSideLow) == theWorld.worldSpotX(theChris.rightSideLow)) &&
-        (theWorld.worldSpotY(leftSideLow) == theWorld.worldSpotY(theChris.rightSideLow))){
-      position.x = theWorld.rightOfSquare(leftSideLow)+wallProbeDistance;
+  if( currentLevel.worldSquareAt(leftSideLow)==World.TILE_SOLID ||
+        (currentLevel.worldSpotX(leftSideLow) == currentLevel.worldSpotX(theChris.rightSideLow)) &&
+        (currentLevel.worldSpotY(leftSideLow) == currentLevel.worldSpotY(theChris.rightSideLow))){
+      position.x = currentLevel.rightOfSquare(leftSideLow)+wallProbeDistance;
       if(velocity.x < 0) {
         velocity.x = 0.0;
       }
     }
    
-    if( theWorld.worldSquareAt(leftSideHigh)==World.TILE_SOLID ||
-        (theWorld.worldSpotX(leftSideHigh) == theWorld.worldSpotX(theChris.rightSideHigh)) &&
-        (theWorld.worldSpotY(leftSideHigh) == theWorld.worldSpotY(theChris.rightSideHigh))){
-      position.x = theWorld.rightOfSquare(leftSideHigh)+wallProbeDistance;
+    if( currentLevel.worldSquareAt(leftSideHigh)==World.TILE_SOLID ||
+        (currentLevel.worldSpotX(leftSideHigh) == currentLevel.worldSpotX(theChris.rightSideHigh)) &&
+        (currentLevel.worldSpotY(leftSideHigh) == currentLevel.worldSpotY(theChris.rightSideHigh))){
+      position.x = currentLevel.rightOfSquare(leftSideHigh)+wallProbeDistance;
       if(velocity.x < 0) {
         velocity.x = 0.0;
       }
     }
    
-    if( theWorld.worldSquareAt(rightSideLow)==World.TILE_SOLID ||
-        (theWorld.worldSpotX(rightSideLow) == theWorld.worldSpotX(theChris.leftSideLow)) &&
-        (theWorld.worldSpotY(rightSideLow) == theWorld.worldSpotY(theChris.leftSideLow))){
-      position.x = theWorld.leftOfSquare(rightSideLow)-wallProbeDistance;
+    if( currentLevel.worldSquareAt(rightSideLow)==World.TILE_SOLID ||
+        (currentLevel.worldSpotX(rightSideLow) == currentLevel.worldSpotX(theChris.leftSideLow)) &&
+        (currentLevel.worldSpotY(rightSideLow) == currentLevel.worldSpotY(theChris.leftSideLow))){
+      position.x = currentLevel.leftOfSquare(rightSideLow)-wallProbeDistance;
       if(velocity.x > 0) {
         velocity.x = 0.0;
       }
     }
    
-    if( theWorld.worldSquareAt(rightSideHigh)==World.TILE_SOLID||
-        (theWorld.worldSpotX(rightSideHigh) == theWorld.worldSpotX(theChris.leftSideHigh)) &&
-        (theWorld.worldSpotY(rightSideHigh) == theWorld.worldSpotY(theChris.leftSideHigh))){
-      position.x = theWorld.leftOfSquare(rightSideHigh)-wallProbeDistance;
+    if( currentLevel.worldSquareAt(rightSideHigh)==World.TILE_SOLID||
+        (currentLevel.worldSpotX(rightSideHigh) == currentLevel.worldSpotX(theChris.leftSideHigh)) &&
+        (currentLevel.worldSpotY(rightSideHigh) == currentLevel.worldSpotY(theChris.leftSideHigh))){
+      position.x = currentLevel.leftOfSquare(rightSideHigh)-wallProbeDistance;
       if(velocity.x > 0) {
         velocity.x = 0.0;
       }
@@ -175,7 +175,7 @@ class Thomas extends Player {
   void draw() {
     int thomasWidth = thomas.width;
     int thomasHeight = thomas.height;
-    //image(thomas, xToBegin(theWorld.start_Grid), yToBegin(theWorld.start_Grid));
+    //image(thomas, xToBegin(currentLevel.start_Grid), yToBegin(currentLevel.start_Grid));
     
     if(velocity.x<-TRIVIAL_SPEED) {
       facingRight = false;

@@ -13,16 +13,16 @@ class Chris extends Player {
   
   void checkForFalling() {
     // If we're standing on an empty tile or end tile, we're not standing on anything. Fall!
-    if(theWorld.worldSquareAt(position)==World.TILE_EMPTY ||
-       //theWorld.worldSquareAt(position)==World.TILE_START_CHRIS ||
-       theWorld.worldSquareAt(position)==World.TILE_END_CHRIS){
+    if(currentLevel.worldSquareAt(position)==World.TILE_EMPTY ||
+       //currentLevel.worldSquareAt(position)==World.TILE_START_CHRIS ||
+       currentLevel.worldSquareAt(position)==WorldTwo.TILE_END_CHRIS){
        isOnGround=false;
     }
     
     if(isOnGround==false) { // not on ground?    
-      if(theWorld.worldSquareAt(position)==World.TILE_SOLID) { // landed on solid square?
+      if(currentLevel.worldSquareAt(position)==World.TILE_SOLID) { // landed on solid square?
         isOnGround = true;
-        position.y = theWorld.topOfSquare(position);
+        position.y = currentLevel.topOfSquare(position);
         velocity.y = 0.0;
       } else { // fall
         velocity.y += GRAVITY_POWER;
@@ -32,10 +32,10 @@ class Chris extends Player {
   
   /*
    || 
-        theWorld.bottomOfSquare(position) == theWorld.topOfSquare(theChris.position) ||
-        theWorld.topOfSquare(position) == theWorld.bottomOfSquare(theChris.position) ||
-        theWorld.leftOfSquare(position) == theWorld.rightOfSquare(theChris.position) ||
-        theWorld.rightOfSquare(position) == theWorld.leftOfSquare(theChris.position)
+        currentLevel.bottomOfSquare(position) == currentLevel.topOfSquare(theChris.position) ||
+        currentLevel.topOfSquare(position) == currentLevel.bottomOfSquare(theChris.position) ||
+        currentLevel.leftOfSquare(position) == currentLevel.rightOfSquare(theChris.position) ||
+        currentLevel.rightOfSquare(position) == currentLevel.leftOfSquare(theChris.position)
   */
 
   void checkForWallBumping() {
@@ -75,42 +75,42 @@ class Chris extends Player {
     // the following conditionals just check for collisions with each bump probe
     // depending upon which probe has collided, we push the player back the opposite direction
     
-    if( theWorld.worldSquareAt(topSide)==World.TILE_SOLID) {
-      if(theWorld.worldSquareAt(position)==World.TILE_SOLID) {
+    if( currentLevel.worldSquareAt(topSide)==World.TILE_SOLID) {
+      if(currentLevel.worldSquareAt(position)==World.TILE_SOLID) {
         position.sub(velocity);
         velocity.x=0.0;
         velocity.y=0.0;
       } else {
-        position.y = theWorld.bottomOfSquare(topSide)+chrisHeight;
+        position.y = currentLevel.bottomOfSquare(topSide)+chrisHeight;
         if(velocity.y < 0) {
           velocity.y = 0.0;
         }
       }
     }
     
-    if( theWorld.worldSquareAt(leftSideLow)==World.TILE_SOLID) {
-      position.x = theWorld.rightOfSquare(leftSideLow)+wallProbeDistance;
+    if( currentLevel.worldSquareAt(leftSideLow)==World.TILE_SOLID) {
+      position.x = currentLevel.rightOfSquare(leftSideLow)+wallProbeDistance;
       if(velocity.x < 0) {
         velocity.x = 0.0;
       }
     }
    
-    if( theWorld.worldSquareAt(leftSideHigh)==World.TILE_SOLID) {
-      position.x = theWorld.rightOfSquare(leftSideHigh)+wallProbeDistance;
+    if( currentLevel.worldSquareAt(leftSideHigh)==World.TILE_SOLID) {
+      position.x = currentLevel.rightOfSquare(leftSideHigh)+wallProbeDistance;
       if(velocity.x < 0) {
         velocity.x = 0.0;
       }
     }
    
-    if( theWorld.worldSquareAt(rightSideLow)==World.TILE_SOLID) {
-      position.x = theWorld.leftOfSquare(rightSideLow)-wallProbeDistance;
+    if( currentLevel.worldSquareAt(rightSideLow)==World.TILE_SOLID) {
+      position.x = currentLevel.leftOfSquare(rightSideLow)-wallProbeDistance;
       if(velocity.x > 0) {
         velocity.x = 0.0;
       }
     }
    
-    if( theWorld.worldSquareAt(rightSideHigh)==World.TILE_SOLID) {
-      position.x = theWorld.leftOfSquare(rightSideHigh)-wallProbeDistance;
+    if( currentLevel.worldSquareAt(rightSideHigh)==World.TILE_SOLID) {
+      position.x = currentLevel.leftOfSquare(rightSideHigh)-wallProbeDistance;
       if(velocity.x > 0) {
         velocity.x = 0.0;
       }

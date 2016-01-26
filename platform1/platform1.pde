@@ -9,10 +9,12 @@ PImage startButton;
 float cameraOffsetX;
 
 Thomas theThomas = new Thomas();
-World theWorld = new World();
+WorldOne LevelOne = new WorldOne();
+WorldTwo LevelTwo = new WorldTwo();
 Keyboard theKeyboard = new Keyboard();
 Chris theChris = new Chris();
 Player currentPlayer = theThomas;
+World currentLevel = LevelOne;
 
 PFont font;
 PFont title;
@@ -45,18 +47,31 @@ void setup() { // called automatically when the program starts
 
 void resetLevel() {
   // multiple levels could be supported by copying in a different start grid
-
+  
+  if (currentLevel == LevelTwo && levelWonThomas() && levelWonChris()){
+      currentLevel = LevelOne;
+  }
+  
   theThomas.reset(); // reset everything about the player
-  theChris.reset();
-
-  theWorld.reload(); // reset world map
-
+  
+  if (currentLevel == LevelOne){
+    LevelOne.reload(); // reset world map
+  }else {
+    theChris.reset();
+    LevelTwo.reload();
+  }
+  
   // reset timer in corner
   levelCurrentTimeSec = levelStartTimeSec = millis()/1000; // dividing by 1000 to turn milliseconds into seconds
 }
 
+void nextLevel(){
+  currentLevel = LevelTwo;
+  resetLevel();
+}
+
 void switchPlayer(){ //changes the control of the player chronologically
-  if (currentPlayer == theThomas){
+  if (currentPlayer == theThomas && currentLevel == LevelTwo){
     currentPlayer = theChris;
   }else if (currentPlayer == theChris){
     currentPlayer = theThomas;
@@ -68,7 +83,7 @@ Boolean levelWonThomas() { // checks whether player has gotten to white rectangl
   // (remember that "position" is keeping track of bottom center of player)
   centerOfPlayer = new PVector(theThomas.position.x, theThomas.position.y-thomas.height/2);
 
-  return (theWorld.worldSquareAt(centerOfPlayer)==5);
+  return (currentLevel.worldSquareAt(centerOfPlayer)==5);
 }
 
 Boolean levelWonChris() { // checks whether player has gotten to white rectangle
@@ -76,11 +91,11 @@ Boolean levelWonChris() { // checks whether player has gotten to white rectangle
   // (remember that "position" is keeping track of bottom center of player)
   centerOfPlayer = new PVector(theChris.position.x, theChris.position.y-chris.height/2);
 
-  return (theWorld.worldSquareAt(centerOfPlayer)==6);
+  return (currentLevel.worldSquareAt(centerOfPlayer)==6);
 }
 
 Boolean levelLost(){ // checks whether player(s) has fallen in the cracks aka died
-  return theWorld.deathSquare(theThomas.position) || theWorld.deathSquare(theChris.position); 
+  return currentLevel.deathSquare(theThomas.position) || currentLevel.deathSquare(theChris.position); 
 }
 
 /*
@@ -159,22 +174,29 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
 
   updateCameraPosition();
 
-  theWorld.render();
+  currentLevel.render();
     
   if (levelLost() == false){
+    if (currentLevel == LevelOne && currentPlayer == theThomas){
+      image(cursor, theThomas.position.x- 0.3*thomas.width, theThomas.position.y - 1.4*thomas.height);
+      theThomas.inputCheck();
+      theThomas.move();
+      theThomas.draw();
+    }else if (currentLevel == LevelTwo){
     if (currentPlayer == theThomas){
       image(cursor, theThomas.position.x- 0.3*thomas.width, theThomas.position.y - 1.4*thomas.height);
       theThomas.inputCheck();
       theThomas.move();
       
-    }
+      }
     if (currentPlayer == theChris){
       image(cursor, theChris.position.x-0.3*chris.width, theChris.position.y - 1.5*chris.height);
       theChris.inputCheck();
       theChris.move();
+      }
+      theThomas.draw();
+      theChris.draw();
     }
-    theThomas.draw();
-    theChris.draw();
   }
   
   popMatrix(); // undoes the translate function from earlier in draw()
@@ -198,9 +220,14 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
       outlinedText(minutes +":"+seconds, width-8, height-10);
     }
 
-    if (levelWonThomas() && levelWonChris()) {
+    if (levelWonThomas() && currentLevel == LevelOne) {
       textAlign(CENTER);
-      outlinedText("You have finished the level!\nPress R to Reset.", width/2, height/2-12);
+      outlinedText("You have finished the level!\nPress N to go to the next Level!", width/2, height/2-12);
+    }
+    
+    if (levelWonThomas() && levelWonChris() && currentLevel == LevelTwo) {
+      textAlign(CENTER);
+      outlinedText("Congratulations! You have finished the game!\nPress R to Reset and start over.", width/2, height/2-12);
     }
     
     if (levelLost()) {
