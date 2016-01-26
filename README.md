@@ -32,10 +32,11 @@ Yvonne & Vandana - Worked on character collisions - why is this so much harder t
 
 1/25/16
 Vandana - 
-Morning/Afternoon: figured out why character collisions aren't working, made some progress in fixing it.  Basically, one character jumps on top of another and recognizes that it should not overlap.  But then checkForWallBumping() executes again and the player no longer recognizes that it should not overlap with the other, because isOnGround gets set to false.  So then it falls, and gets confused because checkForPlayerBumping() tells it it is wrong from all directions.  Not sure how to fix this.
+Morning/Afternoon: figured out why character collisions aren't working, made some progress in fixing it with Yvonne.  Basically, one character jumps on top of another and recognizes that it should not overlap.  But then checkForWallBumping() executes again and the player no longer recognizes that it should not overlap with the other, because isOnGround gets set to false.  So then it falls, and gets confused because checkForPlayerBumping() tells it it is wrong from all directions.  Not sure how to fix this.
 Evening: Fixed character collisions! Now the only problem is that when characters jump off of one another they keep going up until a left/right arrow is pressed.
 
 Yvonne - resumed and finished title screen
        - helped debug and figure out different techniques to fix character collisions problems
-       
+       - added a second level and reorganized the game accordingly
+       - added storyline to make game more interesting - FINALLY FINISHED WOOT!
        
