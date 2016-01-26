@@ -1,4 +1,4 @@
-class World {
+abstract class World {
   static final int TILE_EMPTY = 0;
   static final int TILE_SOLID = 1;
   static final int TILE_START_THOMAS = 4; // the players start where these are placed

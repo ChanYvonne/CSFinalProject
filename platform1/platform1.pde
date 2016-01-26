@@ -3,6 +3,7 @@ PImage thomas;
 PImage chris;
 PImage cursor;
 Boolean StartScreen;
+PImage startButton;
 
 // we use this to track how far the camera has scrolled left or right
 float cameraOffsetX;
@@ -26,13 +27,15 @@ void setup() { // called automatically when the program starts
   size(1000,721); // how large the window/screen is for the level
 
   font = loadFont("CenturyGothic-24.vlw");
-  title = loadFont("CenturyGothic-48.vlw");
+  title = loadFont("CenturyGothic-72.vlw");
 
   thomas = loadImage("thomas.png");
   chris = loadImage("chris.png");
   cursor = loadImage("cursor.png");
   
-  
+  StartScreen = true;
+  startButton = loadImage("startbutton.png"); 
+  startButton.resize(0,50);
 
   cameraOffsetX = 0.0;
   frameRate(24); // this means draw() will be called 24 times per second
@@ -108,7 +111,7 @@ void outlinedText(String sayThis, float atX, float atY) {
 void titleText(String titlename, float atX, float atY){
   textFont(title);
   fill(255);
-  text(titlename, atX-1, atY);  
+  text(titlename, atX, atY);  
 }
 
 void updateCameraPosition() {
@@ -131,22 +134,26 @@ void updateCameraPosition() {
 }
 
 void mouseClicked(){
-  StartScreen = false;
+  if (mouseX >= 300 && mouseX <= 300 + startButton.width 
+      && mouseY >= 500 && mouseY <= 500 + startButton.height){
+      StartScreen = false;
+  }
 }
 
 void draw() { // called automatically, 24 times per second because of setup()'s call to frameRate(24)
-  /*if (StartScreen){
+  if (StartScreen){
     background(32,36,55);
     pushMatrix();
     rotate(PI/15.0);
-    titleText("Thomas Was", 350, 100);
-    rotate(PI+14*PI/15.0);
-    titleText("Alone", 660,250);
+    titleText("Thomas Was", 175, 120);
+    rotate(-1*PI/15.0);
+    titleText("Alone", 625,250);
     popMatrix();
-    image(thomas,200,400);
-    image(chris, 200+thomas.width,400 +thomas.height - chris.height);
-    outlinedText("How to play:\nUse arrows to move.\nSpacebar to jump.\nQ to switch characters.", width/2 - 100, height-120);
-  }else{  */
+    image(thomas,625,300);
+    image(chris, 300,300 +thomas.height - chris.height);
+    image(startButton, 300, 500);
+    outlinedText("How to play:\nUse arrows to move.\nSpacebar to jump.\nQ to switch characters.", width/2 - 200, height-120);
+  }else{
   pushMatrix(); // lets us easily undo the upcoming translate call
   translate(-cameraOffsetX, 0.0); // affects all upcoming graphics calls, until popMatrix
 
@@ -172,12 +179,12 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
   
   popMatrix(); // undoes the translate function from earlier in draw()
   
-  
+  /*
   if (focused == false) { // does the window currently not have keyboard focus?
     textAlign(CENTER);
     outlinedText("Click this area to play.\n\nUse arrows to move.\nSpacebar to jump.\nQ to switch characters.", width/2, height-120);
   } else {
-  
+  */
     textAlign(RIGHT);
     if (levelWonThomas() == false && levelWonChris() == false &&
         levelLost() == false) { // stop updating timer after player finishes
