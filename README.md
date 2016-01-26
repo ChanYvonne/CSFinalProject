@@ -10,14 +10,12 @@ Yvonne - began creating a title screen and couldn't get characters not to overla
 
 1/20/16
 Yvonne - Continued working on title screen
-
        - Encountered a problem with players, they can't move left/right!
        
 Vandana - still working on character collisions: making the variables used in WallBumping accessible to use for PlayerBumping
 
 1/21/16
 Yvonne - Continued working on title screen
-
        - Can't fix the bug with characters :(
        
 Vandana - still working on character collisions: tried putting it in platform1, Player, Thomas/Chris but running into problems each time (e.g. NullPointerException)
@@ -38,7 +36,6 @@ Morning/Afternoon: figured out why character collisions aren't working, made som
 Evening: Fixed character collisions! Now the only problem is that when characters jump off of one another they keep going up until a left/right arrow is pressed.
 
 Yvonne - resumed and finished title screen
-
        - helped debug and figure out different techniques to fix character collisions problems
        
        
