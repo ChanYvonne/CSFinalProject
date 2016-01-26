@@ -108,7 +108,7 @@ abstract class Player {
     // the following conditionals just check for collisions with each bump probe
     // depending upon which probe has collided, we push the player back the opposite direction
     
-    //left side low
+    //left side low of Chris
     if(theChris.getVelocityX() < 0) {
       if(chrisleftSideLow.x <= thomasrightSideLow.x && chrisleftSideLow.y >= thomastopSide.y
       && chrisrightSideLow.x >= thomasleftSideLow.x && chrisleftSideHigh.y <= theThomas.getPosY()) {
@@ -122,11 +122,26 @@ abstract class Player {
         theChris.checkForFalling();
       }
     }
+    
+    
+   // left side high of Chris
+    if(theThomas.getVelocityX() > 0) {
+      if(chrisrightSideHigh.x >= thomasleftSideLow.x && chrisrightSideHigh.y <= theThomas.getPosY()
+      && chrisleftSideLow.x <= thomasrightSideLow.x && chrisleftSideLow.y >= thomastopSide.y) {
+        theThomas.setPosX(theThomas.getPosX() - theThomas.getVelocityX());
+        theThomas.setPosY(theThomas.getPosY() - theThomas.getVelocityY());
+        theThomas.resetVelocityX();
+        theThomas.resetVelocityY();
+        theThomas.isOnGround = true;
+      } else {
+        theThomas.checkForFalling();
+      }
+    }
    
-   // left side high
+   // right side high of Chris
     if(theThomas.getVelocityX() < 0) {
       if(chrisleftSideHigh.x <= thomasrightSideLow.x && chrisleftSideHigh.y <= theThomas.getPosY()
-      && chrisrightSideLow.x >= thomasleftSideLow.x && chrisleftSideHigh.y >= theThomas.getPosY()) {
+      && chrisrightSideLow.x >= thomasleftSideLow.x && chrisleftSideLow.y >= thomastopSide.y) {
         theThomas.setPosX(theThomas.getPosX() - theThomas.getVelocityX());
         theThomas.setPosY(theThomas.getPosY() - theThomas.getVelocityY());
         theThomas.resetVelocityX();
@@ -137,7 +152,7 @@ abstract class Player {
       }
     }
    
-   // right side low
+   // right side low of Chris
     if(theChris.getVelocityX() > 0) {
       if(chrisrightSideLow.x >= thomasleftSideLow.x && chrisrightSideLow.y >= thomastopSide.y
       && chrisleftSideHigh.x <= thomasrightSideLow.x && chrisleftSideHigh.y <= theThomas.getPosY()) {      
@@ -151,19 +166,6 @@ abstract class Player {
       }
     }
    
-   // right side high
-    if(theThomas.getVelocityX() > 0) {
-      if(chrisrightSideHigh.x >= thomasleftSideLow.x && chrisrightSideHigh.y <= theThomas.getPosY()
-      && chrisleftSideLow.x <= thomasrightSideLow.x && chrisleftSideLow.y >= thomastopSide.y) {
-        theThomas.setPosX(theThomas.getPosX() - theThomas.getVelocityX());
-        theThomas.setPosY(theThomas.getPosY() - theThomas.getVelocityY());
-        theThomas.resetVelocityX();
-        theThomas.resetVelocityY();
-        theThomas.isOnGround = true;
-      } else {
-        theThomas.checkForFalling();
-      }
-    }
   }
 
   void move() {
