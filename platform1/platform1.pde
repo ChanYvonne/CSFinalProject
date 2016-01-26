@@ -2,6 +2,7 @@
 PImage thomas;
 PImage chris;
 PImage cursor;
+Boolean StartScreen;
 
 // we use this to track how far the camera has scrolled left or right
 float cameraOffsetX;
@@ -13,6 +14,7 @@ Chris theChris = new Chris();
 Player currentPlayer = theThomas;
 
 PFont font;
+PFont title;
 
 // we use these for keeping track of how long player has played
 int levelStartTimeSec, levelCurrentTimeSec;
@@ -23,7 +25,8 @@ final float GRAVITY_POWER = 0.5; // try making it higher or lower!
 void setup() { // called automatically when the program starts
   size(1000,721); // how large the window/screen is for the level
 
-  font = loadFont("Avenir-Oblique-20.vlw");
+  font = loadFont("CenturyGothic-24.vlw");
+  title = loadFont("CenturyGothic-48.vlw");
 
   thomas = loadImage("thomas.png");
   chris = loadImage("chris.png");
@@ -73,6 +76,11 @@ Boolean levelWonChris() { // checks whether player has gotten to white rectangle
   return (theWorld.worldSquareAt(centerOfPlayer)==6);
 }
 
+Boolean levelLost(){ // checks whether player(s) has fallen in the cracks aka died
+  return theWorld.deathSquare(theThomas.position) || theWorld.deathSquare(theChris.position); 
+}
+
+/*
 Boolean levelLostThomas(){ // checks whether player has fallen in the cracks aka died
   PVector bottomOfPlayer;
   bottomOfPlayer = new PVector(theThomas.position.x, theThomas.position.y-thomas.height);
@@ -84,6 +92,7 @@ Boolean levelLostChris(){ // checks whether player has fallen in the cracks aka 
   bottomOfPlayer = new PVector(theChris.position.x, theChris.position.y-chris.height);
   return theWorld.deathSquare(theChris.position); 
 }
+*/
 
 void outlinedText(String sayThis, float atX, float atY) {
   textFont(font); // use the font we loaded
@@ -94,6 +103,12 @@ void outlinedText(String sayThis, float atX, float atY) {
   text(sayThis, atX, atY+1);
   fill(255); // white for this next text, in the middle
   text(sayThis, atX, atY);
+}
+
+void titleText(String titlename, float atX, float atY){
+  textFont(title);
+  fill(255);
+  text(titlename, atX-1, atY);  
 }
 
 void updateCameraPosition() {
@@ -115,7 +130,23 @@ void updateCameraPosition() {
   }
 }
 
+void mouseClicked(){
+  StartScreen = false;
+}
+
 void draw() { // called automatically, 24 times per second because of setup()'s call to frameRate(24)
+  /*if (StartScreen){
+    background(32,36,55);
+    pushMatrix();
+    rotate(PI/15.0);
+    titleText("Thomas Was", 350, 100);
+    rotate(PI+14*PI/15.0);
+    titleText("Alone", 660,250);
+    popMatrix();
+    image(thomas,200,400);
+    image(chris, 200+thomas.width,400 +thomas.height - chris.height);
+    outlinedText("How to play:\nUse arrows to move.\nSpacebar to jump.\nQ to switch characters.", width/2 - 100, height-120);
+  }else{  */
   pushMatrix(); // lets us easily undo the upcoming translate call
   translate(-cameraOffsetX, 0.0); // affects all upcoming graphics calls, until popMatrix
 
@@ -123,7 +154,7 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
 
   theWorld.render();
     
-  if (levelLostThomas() == false || levelLostChris() == false){
+  if (levelLost() == false){
     if (currentPlayer == theThomas){
       image(cursor, theThomas.position.x- 0.3*thomas.width, theThomas.position.y - 1.4*thomas.height);
       theThomas.inputCheck();
@@ -140,14 +171,16 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
   }
   
   popMatrix(); // undoes the translate function from earlier in draw()
-
+  
+  
   if (focused == false) { // does the window currently not have keyboard focus?
     textAlign(CENTER);
     outlinedText("Click this area to play.\n\nUse arrows to move.\nSpacebar to jump.\nQ to switch characters.", width/2, height-120);
   } else {
+  
     textAlign(RIGHT);
     if (levelWonThomas() == false && levelWonChris() == false &&
-        (levelLostThomas() == false || levelLostChris() == false)) { // stop updating timer after player finishes
+        levelLost() == false) { // stop updating timer after player finishes
       levelCurrentTimeSec = millis()/1000; // dividing by 1000 to turn milliseconds into seconds
     }
     int minutes = (levelCurrentTimeSec-levelStartTimeSec)/60;
@@ -163,7 +196,7 @@ void draw() { // called automatically, 24 times per second because of setup()'s 
       outlinedText("You have finished the level!\nPress R to Reset.", width/2, height/2-12);
     }
     
-    if (levelLostThomas() && levelLostChris()) {
+    if (levelLost()) {
       textAlign(CENTER);
       outlinedText("You have lost this level!\nPress R to Reset and try again.", width/2, height/2-12);
     }
